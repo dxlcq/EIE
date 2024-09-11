@@ -1,7 +1,7 @@
 
 <center>
 
-<img src="https://eie.cqu.edu.cn/images/logo-top.svg">
+<img src="https://english.cqu.edu.cn/img/logo.png">
 
 </center>
 
