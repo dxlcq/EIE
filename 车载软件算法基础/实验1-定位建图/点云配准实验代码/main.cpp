@@ -25,19 +25,20 @@ int main(int argc, char **argv){
 
     double a[13];
     char* end;
-    for(int i=1; i<=12; i++)
-        a[i] = std::strtod(argv[i], &end);
+    //for(int i=1; i<=12; i++) a[i] = std::strtod(argv[i], &end);
 
+    /*
     T_predict << a[1], a[2], a[3], a[4],
                  a[5], a[6], a[7], a[8],
                  a[9], a[10],a[11],a[12],
                  0, 0, 0, 1;
-    /*
+    */
+    
     T_predict << 0.765, 0.643, -0.027, -1.472,
                   -0.6, 0.765, -0.023, 1.3,
                  0.006, 0.035, 0.999, -0.1,
                 0, 0, 0, 1;
-    */
+    
 
     // =======================   optimized icp   =======================
     OptimizedICPGN icp_opt;
@@ -47,6 +48,7 @@ int main(int argc, char **argv){
     icp_opt.SetTransformationEpsilon(1e-4);     // 收敛阈值
     bool result = icp_opt.Match(cloud_source_ptr, T_predict, cloud_source_opti_transformed_ptr, T_final);
     //std::cout << "OPT ICP 分数: "<< icp_opt.GetFitnessScore(0.3) << " 收敛: " << icp_opt.HasConverged() << std::endl;
+    
     // =======================   optimized icp   =======================
 
     // =======================   svd icp   =======================
@@ -61,16 +63,16 @@ int main(int argc, char **argv){
     //std::cout << "SVD ICP 分数: " << icp_svd.getFitnessScore() << std::endl;
     // =======================   svd icp   =======================
 
+    /*
     std::cout << "初始参数:" << std::endl;
     for(int i=1; i<=12; i++){
         cout << a[i] << " ";
         if(i%4 == 0) cout << std::endl;
     }
+    */
 
     std::cout << "OPT ICP 分数: "<< icp_opt.GetFitnessScore(0.3) << " 收敛: " << icp_opt.HasConverged() << std::endl;
     std::cout << "SVD ICP 分数: " << icp_svd.getFitnessScore() << std::endl;    
-
-    return 0;
 
     // 可视化
     boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer(new pcl::visualization::PCLVisualizer("viewer"));
