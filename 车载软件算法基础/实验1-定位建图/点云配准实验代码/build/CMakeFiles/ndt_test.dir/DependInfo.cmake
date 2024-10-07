@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/jiao/Desktop/作业/点云配准实验代码/ndt_test.cpp" "/home/jiao/Desktop/作业/点云配准实验代码/build/CMakeFiles/ndt_test.dir/ndt_test.cpp.o"
+  "/mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/ndt_test.cpp" "/mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build/CMakeFiles/ndt_test.dir/ndt_test.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

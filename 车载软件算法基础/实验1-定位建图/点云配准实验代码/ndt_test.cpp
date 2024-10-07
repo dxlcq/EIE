@@ -19,27 +19,26 @@ int main(int argc, char **argv){
         PCL_ERROR("Could not find pcd \n");
         return (-1);
     }
-    //std::cout << "load " << target_cloud->size() << " data points from target_cloud" << endl;
+    std::cout << "load " << target_cloud->size() << " data points from target_cloud" << endl;
 
     // 加载源点云
     if (pcl::io::loadPCDFile<pcl::PointXYZ>("../data/room_scan2.pcd", *source_cloud) == -1){
         PCL_ERROR("Could not find pcd \n");
         return (-1);
     }
-    //std::cout << "load " << source_cloud->size() << " data points from source_cloud" << endl;
+    std::cout << "load " << source_cloud->size() << " data points from source_cloud" << endl;
 
     // 过滤
     pcl::ApproximateVoxelGrid<pcl::PointXYZ> approximate_voxel_filter;          // 近似体素网格滤波器初始化
     approximate_voxel_filter.setLeafSize(0.3, 0.3, 0.3);                        // 每个体素的大小为 0.3 个单位。同一体素内的点将被近似为单个点，从而有效地减少云中的点的数量
     approximate_voxel_filter.setInputCloud(source_cloud);                       // 源点云
     approximate_voxel_filter.filter(*filter_cloud);                             // 过滤后的点云
-    //std::cout << "Filter cloud contain " << filter_cloud->size() << "data points from source_cloud" << endl;
+    std::cout << "Filter cloud contain " << filter_cloud->size() << "data points from source_cloud" << endl;
 
     // 设置初始条件
     char* end;
-    double a[5];
-    for(int i=1; i<=4; i++)
-        a[i] = std::strtod(argv[i], &end);
+    double a[5] = {-1, 0.69, 1, 0, 0};  // 初始条件
+    //for(int i=1; i<=4; i++) a[i] = std::strtod(argv[i], &end);
 
     Eigen::AngleAxisf init_rotation(a[1], Eigen::Vector3f::UnitZ());            // 创建绕 Z 轴旋转的角度
     Eigen::Translation3f init_translasition(a[2], a[3], a[4]);                  // 一个平移向量
@@ -63,7 +62,8 @@ int main(int argc, char **argv){
 
     // 输出 NDT 结果
     std::cout << "初始参数：" << a[1] << " " << a[2] << " " << a[3] << " " << a[4] << " NDT 匹配得分: " << ndt.getFitnessScore() << " 收敛: " << ndt.hasConverged() << std::endl;
-    return 0;
+    
+    //return 0;
     
     // =======================   ndt   =======================
     
@@ -86,5 +86,6 @@ int main(int argc, char **argv){
         viewer_final->spinOnce(100);
         std::this_thread::sleep_for(100ms);
     }
+
     return 0;
 }

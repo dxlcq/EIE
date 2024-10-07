@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jiao/Desktop/作业/点云配准实验代码
+CMAKE_SOURCE_DIR = /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jiao/Desktop/作业/点云配准实验代码/build
+CMAKE_BINARY_DIR = /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jiao/Desktop/作业/点云配准实验代码/build/CMakeFiles /home/jiao/Desktop/作业/点云配准实验代码/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build/CMakeFiles /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jiao/Desktop/作业/点云配准实验代码/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

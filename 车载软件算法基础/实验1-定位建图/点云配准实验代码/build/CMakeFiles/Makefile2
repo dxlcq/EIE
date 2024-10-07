@@ -44,10 +44,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jiao/Desktop/作业/点云配准实验代码
+CMAKE_SOURCE_DIR = /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jiao/Desktop/作业/点云配准实验代码/build
+CMAKE_BINARY_DIR = /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -76,14 +76,14 @@ clean: CMakeFiles/optimized_icp.dir/clean
 CMakeFiles/ndt_test.dir/all:
 	$(MAKE) -f CMakeFiles/ndt_test.dir/build.make CMakeFiles/ndt_test.dir/depend
 	$(MAKE) -f CMakeFiles/ndt_test.dir/build.make CMakeFiles/ndt_test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jiao/Desktop/作业/点云配准实验代码/build/CMakeFiles --progress-num=1,2 "Built target ndt_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build/CMakeFiles --progress-num=1,2 "Built target ndt_test"
 .PHONY : CMakeFiles/ndt_test.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/ndt_test.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jiao/Desktop/作业/点云配准实验代码/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/ndt_test.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jiao/Desktop/作业/点云配准实验代码/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build/CMakeFiles 0
 .PHONY : CMakeFiles/ndt_test.dir/rule
 
 # Convenience name for target.
@@ -103,14 +103,14 @@ CMakeFiles/ndt_test.dir/clean:
 CMakeFiles/optimized_icp.dir/all:
 	$(MAKE) -f CMakeFiles/optimized_icp.dir/build.make CMakeFiles/optimized_icp.dir/depend
 	$(MAKE) -f CMakeFiles/optimized_icp.dir/build.make CMakeFiles/optimized_icp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jiao/Desktop/作业/点云配准实验代码/build/CMakeFiles --progress-num=3,4,5 "Built target optimized_icp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build/CMakeFiles --progress-num=3,4,5 "Built target optimized_icp"
 .PHONY : CMakeFiles/optimized_icp.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/optimized_icp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jiao/Desktop/作业/点云配准实验代码/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/optimized_icp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jiao/Desktop/作业/点云配准实验代码/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build/CMakeFiles 0
 .PHONY : CMakeFiles/optimized_icp.dir/rule
 
 # Convenience name for target.
