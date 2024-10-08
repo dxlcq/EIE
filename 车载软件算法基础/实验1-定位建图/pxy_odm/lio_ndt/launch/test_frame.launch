@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find lio_ndt)/rviz/test_frame.rviz"></node>
+    <node pkg="lio_ndt" type="test_frame_node" name="test_frame_node" output="screen"></node>
+</launch>
