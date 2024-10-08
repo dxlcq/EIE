@@ -16,22 +16,25 @@ namespace lio_ndt
             switch ( type ) {
                 case NDT_ICP:
                     registration_ptr_->SetTransformationEpsilon(0.01);
-                    registration_ptr_->SetMaximumIterations(35);
+                    registration_ptr_->SetMaximumIterations(2);
                     registration_ptr_->SetMaxCorrespondDistance(1.0);
                     registration_ptr_->SetResolution(1.0);
                     registration_ptr_->SetStepSize(0.1);
                     break;
                 case ICP:
-                    registration_ptr_->SetTransformationEpsilon(0.01);
+                    registration_ptr_->SetTransformationEpsilon(0.5);
                     registration_ptr_->SetMaximumIterations(35);
                     registration_ptr_->SetMaxCorrespondDistance(1.0);
                     break;
                 case OptimizedICP:
-                    registration_ptr_->SetTransformationEpsilon(0.01);
-                    registration_ptr_->SetMaximumIterations(35);
+                    registration_ptr_->SetTransformationEpsilon(0.5);
+                    registration_ptr_->SetMaximumIterations(2);
                     registration_ptr_->SetMaxCorrespondDistance(1.0);
                     break;
             }
+            cloud_filter_.setLeafSize(1.5f,1.5f,1.5f);
+            local_map_filter_.setLeafSize(1.0f,1.0f,1.0f);
+            display_filter_.setLeafSize(1.0f,1.0f,1.0f); 
         }
 
     
