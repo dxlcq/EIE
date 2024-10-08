@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find lio_ndt)/rviz/front_end.rviz"></node>
+    <arg name="icp" default=""/>
+    <node pkg="lio_ndt" type="front_end_node" name="front_end_node" output="screen" args="$(arg icp)" ></node>
+</launch>
