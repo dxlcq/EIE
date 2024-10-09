@@ -10,6 +10,7 @@
   
 </h3>
 
+任务/实验报告：[https://kdocs.cn/join/gvmv3je](https://kdocs.cn/join/gvmv3je)
 
 * 必修 1：[车载软件开发基础](./车载软件开发基础/)
 
