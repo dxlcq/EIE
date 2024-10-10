@@ -95,8 +95,6 @@ image icon
 .vscode/launch.json
 .vscode/settings.json
 
-.gitignore
 algorithm/1-定位建图/pxy_odm/lio_ndt/.vscode/launch.json
-.gitignore
 algorithm/1-定位建图/pxy_odm/lio_ndt/.vscode/c_cpp_properties.json
 algorithm/1-定位建图/pxy_odm/lio_ndt/.vscode/settings.json
