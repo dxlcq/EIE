@@ -7,6 +7,7 @@
 #include "lio_ndt/subscriber/imu_subscriber.hpp"
 #include "lio_ndt/subscriber/gnss_subscriber.hpp"
 #include "lio_ndt/subscriber/odom_subscriber.hpp"
+#include "lio_ndt/subscriber/odom_bag_subscriber.hpp"
 #include "lio_ndt/tf_listener/tf_listener.hpp"
 #include "lio_ndt/publisher/cloud_publisher.hpp"
 #include "lio_ndt/publisher/odometry_publisher.hpp"
@@ -60,17 +61,19 @@ int main(int argc, char *argv[])
 
     if ( gnss_output_file == "" ) {
         std::cout << "default output_file path";
-        gnss_output_file   = "lio_ndt/data/gt_output.csv";
+        gnss_output_file = "/home/ubuntu/m_projects/lio_ws/src/lio_ndt/data/gnss.csv";
         odom_output_file = "/home/ubuntu/m_projects/lio_ws/src/lio_ndt/data/odom.csv";
       }
 
     // 三个订阅消息：点云、imu、GNSS
-    std::shared_ptr<CloudSubscriber> cloud_sub_ptr = std::make_shared<CloudSubscriber>(nh, "/kitti/velo/pointcloud", 100000);
-    std::shared_ptr<IMUSubscriber> imu_sub_ptr = std::make_shared<IMUSubscriber>(nh, "/kitti/oxts/imu", 1000000);
-    std::shared_ptr<GNSSSubscriber> gnss_sub_ptr = std::make_shared<GNSSSubscriber>(nh, "/kitti/oxts/gps/fix", 1000000);
+    std::shared_ptr<CloudSubscriber>    cloud_sub_ptr = std::make_shared<CloudSubscriber>   (nh, "/kitti/velo/pointcloud", 100000);
+    std::shared_ptr<IMUSubscriber>      imu_sub_ptr   = std::make_shared<IMUSubscriber>     (nh, "/kitti/oxts/imu",        1000000);
+    std::shared_ptr<GNSSSubscriber>     gnss_sub_ptr  = std::make_shared<GNSSSubscriber>    (nh, "/kitti/oxts/gps/fix",    1000000);
     // 加一个保存轨迹的sub
-    std::shared_ptr<OdometrySubscriber> odom_sub_ptr = std::make_shared<OdometrySubscriber>(nh, "/laser_odom", 100000, odom_output_file);
-    // std::shared_ptr<OdometrySubscriber> gnss_sub_ptr = std::make_shared<OdometrySubscriber>(nh, "/gnss", 100000, gnss_output_file);
+    std::shared_ptr<OdometrySubscriber> odom_sub_ptr  = std::make_shared<OdometrySubscriber>(nh, "/laser_odom", 100000, odom_output_file);
+    std::shared_ptr<OdometrySubscriber> gt_sub_ptr    = std::make_shared<OdometrySubscriber>(nh, "/gnss",       100000, gnss_output_file);
+    std::shared_ptr<OdomBagSubscriber>  odom_bag_sub_ptr = std::make_shared<OdomBagSubscriber>(nh, "/laser_odom", 100000, "/home/ubuntu/m_projects/lio_ws/src/lio_ndt/data/odom.bag", "/odom");
+    std::shared_ptr<OdomBagSubscriber>  gt_bag_sub_ptr   = std::make_shared<OdomBagSubscriber>(nh, "/gnss",       100000, "/home/ubuntu/m_projects/lio_ws/src/lio_ndt/data/gnss.bag", "/gt_odom");
 
     // imu 到 lidar 的坐标变换
     std::shared_ptr<TFListener> imu_to_lidar_ptr = std::make_shared<TFListener>(nh, "velo_link", "imu_link");

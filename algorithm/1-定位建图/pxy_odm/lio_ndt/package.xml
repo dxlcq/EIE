@@ -51,10 +51,13 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>rospy</build_depend>
+  <exec_depend>rosbag</exec_depend>
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>rospy</build_export_depend>
+  <build_export_depend>rosbag</build_export_depend>
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rospy</exec_depend>
+  <exec_depend>rosbag</exec_depend>
 
   <build_depend>sensor_msgs</build_depend>
   <build_depend>pcl_ros</build_depend>
@@ -62,6 +65,7 @@
   <build_depend>geometry_msgs</build_depend>
   <build_depend>tf</build_depend>
   <build_depend>eigen_conversions</build_depend>
+  
 
 
   <!-- The export tag contains other, unspecified, tags -->
