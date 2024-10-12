@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码
+CMAKE_SOURCE_DIR = /home/liy/EIE/algorithm/1-定位建图/点云配准实验代码
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build
+CMAKE_BINARY_DIR = /home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/optimized_icp.dir/depend.make
@@ -59,29 +59,29 @@ include CMakeFiles/optimized_icp.dir/flags.make
 
 CMakeFiles/optimized_icp.dir/main.cpp.o: CMakeFiles/optimized_icp.dir/flags.make
 CMakeFiles/optimized_icp.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/optimized_icp.dir/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/optimized_icp.dir/main.cpp.o -c /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/optimized_icp.dir/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/optimized_icp.dir/main.cpp.o -c /home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/main.cpp
 
 CMakeFiles/optimized_icp.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/optimized_icp.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/main.cpp > CMakeFiles/optimized_icp.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/main.cpp > CMakeFiles/optimized_icp.dir/main.cpp.i
 
 CMakeFiles/optimized_icp.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/optimized_icp.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/main.cpp -o CMakeFiles/optimized_icp.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/main.cpp -o CMakeFiles/optimized_icp.dir/main.cpp.s
 
 CMakeFiles/optimized_icp.dir/optimized_ICP_GN.cpp.o: CMakeFiles/optimized_icp.dir/flags.make
 CMakeFiles/optimized_icp.dir/optimized_ICP_GN.cpp.o: ../optimized_ICP_GN.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/optimized_icp.dir/optimized_ICP_GN.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/optimized_icp.dir/optimized_ICP_GN.cpp.o -c /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/optimized_ICP_GN.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/optimized_icp.dir/optimized_ICP_GN.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/optimized_icp.dir/optimized_ICP_GN.cpp.o -c /home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/optimized_ICP_GN.cpp
 
 CMakeFiles/optimized_icp.dir/optimized_ICP_GN.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/optimized_icp.dir/optimized_ICP_GN.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/optimized_ICP_GN.cpp > CMakeFiles/optimized_icp.dir/optimized_ICP_GN.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/optimized_ICP_GN.cpp > CMakeFiles/optimized_icp.dir/optimized_ICP_GN.cpp.i
 
 CMakeFiles/optimized_icp.dir/optimized_ICP_GN.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/optimized_icp.dir/optimized_ICP_GN.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/optimized_ICP_GN.cpp -o CMakeFiles/optimized_icp.dir/optimized_ICP_GN.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/optimized_ICP_GN.cpp -o CMakeFiles/optimized_icp.dir/optimized_ICP_GN.cpp.s
 
 # Object files for target optimized_icp
 optimized_icp_OBJECTS = \
@@ -186,7 +186,7 @@ optimized_icp: /usr/lib/x86_64-linux-gnu/libX11.so
 optimized_icp: /usr/lib/x86_64-linux-gnu/libXext.so
 optimized_icp: /usr/lib/x86_64-linux-gnu/libXt.so
 optimized_icp: CMakeFiles/optimized_icp.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable optimized_icp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable optimized_icp"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/optimized_icp.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -199,6 +199,6 @@ CMakeFiles/optimized_icp.dir/clean:
 .PHONY : CMakeFiles/optimized_icp.dir/clean
 
 CMakeFiles/optimized_icp.dir/depend:
-	cd /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码 /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码 /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build/CMakeFiles/optimized_icp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/liy/EIE/algorithm/1-定位建图/点云配准实验代码 /home/liy/EIE/algorithm/1-定位建图/点云配准实验代码 /home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/build /home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/build /home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/build/CMakeFiles/optimized_icp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/optimized_icp.dir/depend
 

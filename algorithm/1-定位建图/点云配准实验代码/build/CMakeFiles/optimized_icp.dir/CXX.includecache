@@ -6,7 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/main.cpp
+/home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/common.h
+Eigen/Dense
+-
+
+/home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/main.cpp
 iostream
 -
 pcl/point_cloud.h
@@ -22,9 +26,15 @@ pcl/registration/icp.h
 Eigen/Dense
 -
 optimized_ICP_GN.h
-/mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/optimized_ICP_GN.h
+/home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/optimized_ICP_GN.h
 
-/mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/optimized_ICP_GN.h
+/home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/optimized_ICP_GN.cpp
+optimized_ICP_GN.h
+/home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/optimized_ICP_GN.h
+common.h
+/home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/common.h
+
+/home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/optimized_ICP_GN.h
 eigen3/Eigen/Core
 -
 pcl/common/transforms.h

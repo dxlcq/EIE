@@ -1,4 +1,4 @@
-# Install script for directory: /mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码
+# Install script for directory: /home/liy/EIE/algorithm/1-定位建图/点云配准实验代码
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/mnt/d/EIE/车载软件算法基础/实验1-定位建图/点云配准实验代码/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/liy/EIE/algorithm/1-定位建图/点云配准实验代码/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
