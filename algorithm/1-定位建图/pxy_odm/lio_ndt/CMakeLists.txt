@@ -12,6 +12,7 @@ set(CMAKE_CXX_STANDARD 14)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
+  rosbag
   std_msgs
   pcl_ros
   geometry_msgs

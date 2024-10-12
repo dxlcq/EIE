@@ -6,10 +6,13 @@
 #include "lio_ndt/subscriber/cloud_subscriber.hpp"
 #include "lio_ndt/subscriber/imu_subscriber.hpp"
 #include "lio_ndt/subscriber/gnss_subscriber.hpp"
+#include "lio_ndt/subscriber/odom_subscriber.hpp"
+#include "lio_ndt/subscriber/odom_bag_subscriber.hpp"
 #include "lio_ndt/tf_listener/tf_listener.hpp"
 #include "lio_ndt/publisher/cloud_publisher.hpp"
 #include "lio_ndt/publisher/odometry_publisher.hpp"
 #include "lio_ndt/front_end/front_end.hpp"
+
 
 using namespace lio_ndt;
 
@@ -27,9 +30,12 @@ int main(int argc, char *argv[])
     int opt = 0;
     // 将 front_end_ptr 定义在 switch 语句之外
     std::shared_ptr<FrontEnd> front_end_ptr;
-
-    while ( (opt = getopt( argc, argv, "hgsn" )) != -1 ) {
+    std::string gnss_output_file{};
+    std::string odom_output_file{};
+    while ( (opt = getopt( argc, argv, "hf:gsn" )) != -1 ) {
         switch ( opt ) {
+            case 'f':
+                gnss_output_file = optarg;
             case 'h':
                 std::cout << "Usage: " << argv[0] << " [-g gn_optimized_icp] [-s svd_icp] [-n ndt_icp]" << std::endl;
                 return 0;
@@ -53,10 +59,21 @@ int main(int argc, char *argv[])
         std::cout << "No front end type selected, use default front end: Optimized ICP" << std::endl;
     }
 
+    if ( gnss_output_file == "" ) {
+        std::cout << "default output_file path";
+        gnss_output_file = "/home/ubuntu/m_projects/lio_ws/src/lio_ndt/data/gnss.csv";
+        odom_output_file = "/home/ubuntu/m_projects/lio_ws/src/lio_ndt/data/odom.csv";
+      }
+
     // 三个订阅消息：点云、imu、GNSS
-    std::shared_ptr<CloudSubscriber> cloud_sub_ptr = std::make_shared<CloudSubscriber>(nh, "/kitti/velo/pointcloud", 100000);
-    std::shared_ptr<IMUSubscriber> imu_sub_ptr = std::make_shared<IMUSubscriber>(nh, "/kitti/oxts/imu", 1000000);
-    std::shared_ptr<GNSSSubscriber> gnss_sub_ptr = std::make_shared<GNSSSubscriber>(nh, "/kitti/oxts/gps/fix", 1000000);
+    std::shared_ptr<CloudSubscriber>    cloud_sub_ptr = std::make_shared<CloudSubscriber>   (nh, "/kitti/velo/pointcloud", 100000);
+    std::shared_ptr<IMUSubscriber>      imu_sub_ptr   = std::make_shared<IMUSubscriber>     (nh, "/kitti/oxts/imu",        1000000);
+    std::shared_ptr<GNSSSubscriber>     gnss_sub_ptr  = std::make_shared<GNSSSubscriber>    (nh, "/kitti/oxts/gps/fix",    1000000);
+    // 加一个保存轨迹的sub
+    std::shared_ptr<OdometrySubscriber> odom_sub_ptr  = std::make_shared<OdometrySubscriber>(nh, "/laser_odom", 100000, odom_output_file);
+    std::shared_ptr<OdometrySubscriber> gt_sub_ptr    = std::make_shared<OdometrySubscriber>(nh, "/gnss",       100000, gnss_output_file);
+    std::shared_ptr<OdomBagSubscriber>  odom_bag_sub_ptr = std::make_shared<OdomBagSubscriber>(nh, "/laser_odom", 100000, "/home/ubuntu/m_projects/lio_ws/src/lio_ndt/data/odom.bag", "/odom");
+    std::shared_ptr<OdomBagSubscriber>  gt_bag_sub_ptr   = std::make_shared<OdomBagSubscriber>(nh, "/gnss",       100000, "/home/ubuntu/m_projects/lio_ws/src/lio_ndt/data/gnss.bag", "/gt_odom");
 
     // imu 到 lidar 的坐标变换
     std::shared_ptr<TFListener> imu_to_lidar_ptr = std::make_shared<TFListener>(nh, "velo_link", "imu_link");
