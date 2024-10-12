@@ -7,6 +7,7 @@ bool OptimizedICPGN::SetTargetCloud(const pcl::PointCloud<pcl::PointXYZ>::Ptr &t
 {
     target_cloud_ptr_ = target_cloud_ptr;
     kdtree_flann_ptr_->setInputCloud(target_cloud_ptr); // 构建kdtree用于全局最近邻搜索
+    return true;
 }
 
 bool OptimizedICPGN::Match(const pcl::PointCloud<pcl::PointXYZ>::Ptr &source_cloud_ptr,
