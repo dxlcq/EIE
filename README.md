@@ -42,6 +42,8 @@
 
 ## 搭建Pytorch环境
 
+Jetson所使用的Pytorch版本是**特殊的**，直接在Pytorch官网拉取安装**会报错**，应该使用Nvidia官方的**JetPack**所提供的Pytorch版本，`jtop`可以查看JetPack的版本
+
 - **查看Nvidia版本**
 
 ```shell
@@ -50,15 +52,18 @@ nvcc -V
 
 **注意：**`nvidia-smi`指令是无法在Jetson上查看cuda版本的，因为Jetson使用的驱动并非是Nvidia，而是L4T(Linux for Tegra)驱动。
 
-- **安装指令**
+- **安装步骤**
 
-```shell
-pip3 install torch torchvision torchaudio --extra-index-url https://developer.download.nvidia.com/compute/redist
-```
-该指令会找适合Jetson版本的Pytorch进行安装。
+Jetson的操作系统是定制的，安装Pytorch跟一般的Ubuntu系统有很大的区别。
 
-**尤其需要注意的是！**Jetson所使用的Pytorch版本是**特殊的**，直接在Pytorch官网拉取安装**会报错**，应该使用Nvidia官方的**JetPack**所提供的Pytorch版本，镜像自带的JetPack版本号为4.4
+参考[安装Pytorch Nvidia官方指导](https://forums.developer.nvidia.com/t/pytorch-for-jetson/72048)
 
+大致步骤如下：
+
+1. `wget`下载上面链接中的本地包
+2. `pip`本地安装`torch`
+3. 安装`torch`对应版本的`torchvision`
+4. 检查是否能够使用cuda
 
 # 二、运行前的准备
 
