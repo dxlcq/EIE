@@ -62,5 +62,5 @@ realsense-viewer
 ## 打开定位
 
 ```
-roslaunch realsense2_bringup open_rslidar.launch
+roslaunch scout_bringup open_rslidar.launch
 ```
