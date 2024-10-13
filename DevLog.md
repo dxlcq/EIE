@@ -59,7 +59,7 @@ realsense-viewer
 
 # 四、定位
 
-## 打开定位
+## 启动定位
 
 ```
 roslaunch scout_bringup open_rslidar.launch
