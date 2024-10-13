@@ -64,3 +64,9 @@ realsense-viewer
 ```
 roslaunch scout_bringup open_rslidar.launch
 ```
+
+# 开发、任务 1
+
+1. `roscore`
+2. ``
+
