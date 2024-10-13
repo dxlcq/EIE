@@ -6,7 +6,7 @@
 
 检查所有的topic
 
-```
+```shell
 rostopic list
 ```
 
@@ -41,4 +41,17 @@ roslaunch scout_bringup gmapping.launch
 rosrun rviz rviz
 ```
 
-# 三、
+# 三、启动深度相机
+
+## UI查看相机
+
+```
+realsense-viewer
+```
+
+## 代码启动
+
+```
+roslaunch realsense2_camera rs_camera.launch
+```
+
