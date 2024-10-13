@@ -125,7 +125,7 @@ roslaunch scout_bringup open_rslidar.launch
 
 # 开发、任务 1
 
-（1）
+（1）显示激光雷达、相机、定位
 
 1. 启动 ros 内核 `roscore`
 2. 发布激光雷达 `roslaunch scout_bringup open_rslidar.launch`
@@ -134,3 +134,13 @@ roslaunch scout_bringup open_rslidar.launch
 5. 订阅激光雷达 `rosrun show_ss point_cloud_by_pcl`
 6. 订阅相机 `rosrun show_ss rgb_and_depth_by_opencv`
 7. 订阅定位 `rosrun show_ss speed_by_ter`
+
+（2）里程计计算距离
+
+1. 启动 ros 内核 `roscore`
+2. 发布激光雷达 `roslaunch scout_bringup open_rslidar.launch`
+3. 订阅激光雷达 `rosrun calc_distance calc_distance`
+
+# 开发、任务 2
+
+1. 启动 ros 内核 `roscore`
