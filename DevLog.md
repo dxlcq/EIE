@@ -2,9 +2,9 @@
 
 松灵小车重庆大学卓工镜像：https://eie.cqu.edu.cn/Research/clwsys/sysb.htm
 
-# 二、启动激光雷达建图
+# 二、运行前的准备
 
-检查所有的topic
+## 查看所有的 topic
 
 ```shell
 rostopic list
@@ -16,7 +16,9 @@ rostopic list
 roscore
 ```
 
-## 打开激光雷达
+# 三、激光雷达
+
+## 启动激光雷达
 
 ```shell
 roslaunch scout_bringup open_rslidar.launch
@@ -41,17 +43,24 @@ roslaunch scout_bringup gmapping.launch
 rosrun rviz rviz
 ```
 
-# 三、启动深度相机
+# 三、深度相机
 
-## UI查看相机
-
-```
-realsense-viewer
-```
-
-## 代码启动
+## 启动深度相机
 
 ```
 roslaunch realsense2_camera rs_camera.launch
 ```
 
+## UI 界面
+
+```
+realsense-viewer
+```
+
+# 四、定位
+
+## 打开定位
+
+```
+roslaunch realsense2_bringup open_rslidar.launch
+```
