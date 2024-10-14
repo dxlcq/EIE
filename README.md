@@ -96,7 +96,7 @@ roslaunch scout_bringup open_rslidar.launch
 
 ## 启动建图
 
-```
+```shell
 roslaunch scout_bringup gmapping.launch
 ```
 
@@ -110,13 +110,13 @@ rosrun rviz rviz
 
 ## 启动深度相机
 
-```
+```shell
 roslaunch realsense2_camera rs_camera.launch
 ```
 
 ## UI 界面
 
-```
+```shell
 realsense-viewer
 ```
 
@@ -124,7 +124,7 @@ realsense-viewer
 
 ## 启动定位
 
-```
+```shell
 roslaunch scout_bringup open_rslidar.launch
 ```
 
