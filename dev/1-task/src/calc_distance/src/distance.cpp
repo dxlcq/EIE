@@ -4,29 +4,58 @@
 #include <iostream>
 using namespace std;
 
-double t_recent;
+#include <queue>
 
-double s;
+double t_recent = 0;
+double s = 0;
+std::queue<double> velocity_queue; // 滑动平均队列
+const int window_size = 5;          // 滑动窗口大小
+
+double calculateMovingAverage(std::queue<double> &queue, double new_value) {
+    queue.push(new_value);
+    if (queue.size() > window_size) {
+        queue.pop();
+    }
+    double sum = 0;
+    std::queue<double> temp_queue = queue;
+    while (!temp_queue.empty()) {
+        sum += temp_queue.front();
+        temp_queue.pop();
+    }
+    return sum / queue.size();
+}
 
 void distanceCallback(const nav_msgs::Odometry::ConstPtr &msg)
 {
     double dt;
     double ds;
     double v;
-    //读取激光雷达相关的话题/odom，可以获取小车速度和采集时间
-    dt = msg->header.stamp.toSec() - t_recent;
-    t_recent = msg->header.stamp.toSec();
 
+    // 获取当前时间戳
+    double current_time = msg->header.stamp.toSec();
+    
+    // 计算时间差
+    dt = current_time - t_recent;
+    t_recent = current_time;
+
+    // 获取速度
     v = msg->twist.twist.linear.x;
+
+    // 处理无效的时间差，使用前一个有效的时间差或最小值
     if (dt > 1 || dt < 0)
-    { //消息间隔太远则说明该时间差无效，这里直接舍去
+    {
         dt = 0;
     }
-    ds = v * dt * 1.0504; //根据建立的线性模型进行校正
+
+    // 滑动平均滤波
+    double filtered_v = calculateMovingAverage(velocity_queue, v);
+
+    // 根据滤波后的速度计算校正的距离
+    ds = filtered_v * dt * 1.0504; // 根据建立的线性模型进行校正
     s += ds;
-    ROS_INFO("v=%0.6fm/s,s=%0.6fm", v, s);
-    return;
-}
+
+    ROS_INFO("=%0.6fm/s (filtered), s=%0.6fm", filtered_v, s);
+} 
 
 int main(int argc, char **argv)
 {
