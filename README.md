@@ -7,7 +7,7 @@
 <h3 align="center">
 
 国家（重庆）卓越工程师学院 2021级 智能网联汽车方向课程
-  
+
 </h3>
 
 * 必修 1：[车载软件开发基础](./algorithm/)
@@ -127,6 +127,47 @@ realsense-viewer
 ```shell
 roslaunch scout_bringup open_rslidar.launch
 ```
+
+# 五、Docker连接
+
+## 1. 下载安装Docker
+
+```shell
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+```
+
+为了不用每次都用`sudo`管理员权限，可以把用户添加到docker组：
+
+```shell
+sudo usermod -aG docker $USER
+```
+
+## 2. 下载镜像
+
+```shell
+docker pull liujiboy/ros:3.0
+```
+
+PS: 下载需要科技上网
+
+## 3. 进入镜像
+
+```shell
+docker run -p 5900:5900 -p 6080:80 --rm -e RESOLUTION=1920x1080 liujiboy/ros:3.0
+```
+
+进行了一个端口映射
+
+**注意：**在VScode进行远程连接的时候需要手快一点，启动上述命令之后迅速用VSCode进行连接，不然登不上去
+
+## 4. 进入网址
+
+````
+127.0.0.1:6080
+````
+
+即可进入图形化界面
 
 # 开发、任务 1
 
