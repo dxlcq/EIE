@@ -1,11 +1,13 @@
 #include "fusion/my_lidar.hpp"
 #include "fusion/my_camera.hpp"
+#include "fusion/my_config.hpp"
 
 int main(int argc, char** argv) {
     ros::init(argc, argv, "fusion"); // 初始化 ROS 节点
     
     my_lidar lidar;     // 创建 my_lidar 类对象
     my_camera camera;   // 创建 my_camera 类对象
+    my_config config;   // 创建 my_config 类对象
 
     // 创建 NodeHandle 对象
     ros::NodeHandle n;

@@ -39,6 +39,7 @@ include_directories(
 add_executable(fusion
   src/my_lidar.cpp
   src/my_camera.cpp
+  src/my_config.cpp
   src/main.cpp
 )
 
