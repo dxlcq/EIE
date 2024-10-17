@@ -231,6 +231,14 @@ rosbag record -a
 
 ## 播放录制的视频
 
+
+进入docker, 同时映射`.bag`文件
+
+```
+docker run -p 5900:5900 -p 6080:80 -v /home/ubuntu/Documents:/mnt/d --rm -e RESOLUTION=1920x1080 liujiboy/ros:3.0
+```
+此命令将Ubuntu的`Documents`文件夹映射到`/mnt/d`文件夹，即可使用`.bag`文件
+
 ```shell
 rosbag play bagName.bag /rslidar_points:=/points_raw --pause 
 ```
