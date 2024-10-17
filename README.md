@@ -196,4 +196,26 @@ docker run -p 5900:5900 -p 6080:80 --rm -e RESOLUTION=1920x1080 liujiboy/ros:3.0
 
 > 有 bug，有时候需要多订阅几次（失败的时候 kill 相机，再启动）
 
+## 录制标定视频数据
+
+- 打开激光雷达
+
+```
+roslaunch scout_bringup open_rslidar.launch
+```
+
+- 打开摄像头
+
+```shell
+roslaunch realsense2_camera rs_camera.launch
+```
+
+- 启动录制
+
+```
+rosbag record -a
+```
+
+使用`ctl + c`结束录制，视频会保存在终端路径下，`.bag`文件较大，建议录制前检查剩余空间，或者可以使用移动硬盘录制
+
 # 开发、任务 3
