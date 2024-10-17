@@ -232,10 +232,16 @@ rosbag record -a
 ## 播放录制的视频
 
 ```shell
-rosbag play bagName.bag /velodyne_points:=/points_raw --pause 
+rosbag play bagName.bag /rslidar_points:=/points_raw --pause 
 ```
 
 `bagName.bag`是录制的标定包的名称
+
+话题重映射：
+
+```
+rosbag play --clock XXX.bag /old_topic:=/new_topic
+```
 
 ## 融合标定
 
