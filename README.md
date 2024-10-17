@@ -190,3 +190,10 @@ docker run -p 5900:5900 -p 6080:80 --rm -e RESOLUTION=1920x1080 liujiboy/ros:3.0
 # 开发、任务 2
 
 1. 启动 ros 内核 `roscore`
+2. 发布激光雷达 `roslaunch scout_bringup open_rslidar.launch`
+3. 发布相机 `roslaunch realsense2_camera rs_camera.launch`
+4. 订阅融合数据 `rosrun fusion_of_camera_and_lidar fusion_of_camera_and_lidar_node`
+
+> 有 bug，有时候需要多订阅几次（失败的时候 kill 相机，再启动）
+
+# 开发、任务 3
