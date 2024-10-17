@@ -189,13 +189,6 @@ docker run -p 5900:5900 -p 6080:80 --rm -e RESOLUTION=1920x1080 liujiboy/ros:3.0
 
 # 开发、任务 2
 
-1. 启动 ros 内核 `roscore`
-2. 发布激光雷达 `roslaunch scout_bringup open_rslidar.launch`
-3. 发布相机 `roslaunch realsense2_camera rs_camera.launch`
-4. 订阅融合数据 `rosrun fusion_of_camera_and_lidar fusion_of_camera_and_lidar_node`
-
-> 有 bug，有时候需要多订阅几次（失败的时候 kill 相机，再启动）
-
 ## 录制标定视频数据
 
 - 打开激光雷达
@@ -217,5 +210,22 @@ rosbag record -a
 ```
 
 使用`ctl + c`结束录制，视频会保存在终端路径下，`.bag`文件较大，建议录制前检查剩余空间，或者可以使用移动硬盘录制
+
+## 播放录制的视频
+
+```shell
+rosbag play bagName.bag /velodyne_points:=/points_raw --pause 
+```
+
+`bagName.bag`是录制的标定包的名称
+
+## 融合标定
+
+1. 启动 ros 内核 `roscore`
+2. 发布激光雷达 `roslaunch scout_bringup open_rslidar.launch`
+3. 发布相机 `roslaunch realsense2_camera rs_camera.launch`
+4. 订阅融合数据 `rosrun fusion_of_camera_and_lidar fusion_of_camera_and_lidar_node`
+
+> 有 bug，有时候需要多订阅几次（失败的时候 kill 相机，再启动）
 
 # 开发、任务 3
