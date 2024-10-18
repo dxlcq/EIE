@@ -42,9 +42,9 @@ git pull
 
 ## 解决办法二
 
-舍弃本地代码,远端版本覆盖本地版本**(慎重)**
+舍弃本地代码,远端版本覆盖本地版本 **(慎重)**
 
-```
+```shell
 git fetch --all
 git reset --hard origin/master
 git fetch
@@ -199,7 +199,7 @@ docker run -p 5900:5900 -p 6080:80 --rm -e RESOLUTION=1920x1080 liujiboy/ros:3.0
 
 进行了一个端口映射
 
-**注意: **在VScode进行远程连接的时候需要手快一点, 启动上述命令之后迅速用VSCode进行连接, 不然登不上去
+**注意: ** 在VScode进行远程连接的时候需要手快一点, 启动上述命令之后迅速用VSCode进行连接, 不然登不上去
 
 ## 4. 进入网址
 
@@ -253,13 +253,20 @@ rosbag record -a
 
 ## 播放录制的视频
 
-
-进入docker, 同时映射`.bag`文件
+- 进入docker, 同时映射`.bag`文件
 
 ```
 docker run -p 5900:5900 -p 6080:80 -v /home/ubuntu/Documents:/mnt/d --rm -e RESOLUTION=1920x1080 liujiboy/ros:3.0
 ```
-此命令将Ubuntu的`Documents`文件夹映射到`/mnt/d`文件夹，即可使用`.bag`文件
+此命令将Ubuntu的`Documents`文件夹映射到`/mnt/d`文件夹，即可使用`.bag`文件.
+
+- 启动roscore
+
+```shell
+roscore
+```
+
+- 播放bag文件
 
 ```shell
 rosbag play bagName.bag /rslidar_points:=/points_raw --pause 
@@ -267,7 +274,7 @@ rosbag play bagName.bag /rslidar_points:=/points_raw --pause
 
 `bagName.bag`是录制的标定包的名称
 
-话题重映射：
+>  话题重映射：
 
 ```
 rosbag play --clock XXX.bag /old_topic:=/new_topic
