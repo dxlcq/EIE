@@ -261,3 +261,18 @@ rosbag play --clock XXX.bag /old_topic:=/new_topic
 > 有 bug，有时候需要多订阅几次（失败的时候 kill 相机，再启动）
 
 # 开发、任务 3
+
+
+
+# 算法：傅春耕
+
+## 点云定位建图
+
+
+
+# 算法：南智雄
+
+## [相机标定试验](algorithm\2-相机标定实验\相机标定实验指导内容.docx)
+
+### Task 1
+
