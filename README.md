@@ -203,7 +203,7 @@ docker run -p 5900:5900 -p 6080:80 --rm -e RESOLUTION=1920x1080 liujiboy/ros:3.0
 
 ## 4. 进入网址
 
-````
+````shell
 127.0.0.1:6080
 ````
 
@@ -233,7 +233,7 @@ docker run -p 5900:5900 -p 6080:80 --rm -e RESOLUTION=1920x1080 liujiboy/ros:3.0
 
 - 打开激光雷达
 
-```
+```shell
 roslaunch scout_bringup open_rslidar.launch
 ```
 
@@ -245,7 +245,7 @@ roslaunch realsense2_camera rs_camera.launch
 
 - 启动录制
 
-```
+```shell
 rosbag record -a
 ```
 
@@ -255,7 +255,7 @@ rosbag record -a
 
 - 进入docker, 同时映射`.bag`文件
 
-```
+```shell
 docker run -p 5900:5900 -p 6080:80 -v /home/ubuntu/Documents:/mnt/d --rm -e RESOLUTION=1920x1080 liujiboy/ros:3.0
 ```
 此命令将Ubuntu的`Documents`文件夹映射到`/mnt/d`文件夹，即可使用`.bag`文件.
@@ -276,8 +276,14 @@ rosbag play bagName.bag /rslidar_points:=/points_raw --pause
 
 >  话题重映射：
 
-```
+```shell
 rosbag play --clock XXX.bag /old_topic:=/new_topic
+```
+
+- 启动标定软件
+
+```shell
+rosrun calibration_camera_lidar calibration_toolkit
 ```
 
 ## 融合标定
