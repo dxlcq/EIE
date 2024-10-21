@@ -338,7 +338,7 @@ rostopic pub /light_cmd base_msgs/ScoutLightCmd "{enable_cmd_light_control: fals
 #        front_custom_value: 应该是亮度
 #        rear_mode: 尾灯，但是车上没有尾灯，应该是其他车型的
 #        rear_custom_value: 无需多言
-# @bref: 可以只使用部分参数，比如要开灯就
+# @brief: 可以只使用部分参数，比如要开灯就
         rostopic pub /light_cmd base_msgs/ScoutLightCmd "{enable_cmd_light_control: true, front_mode: 1}" 
 ```
 
