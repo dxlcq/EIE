@@ -32,15 +32,19 @@ catkin_package()
 include_directories(
   ${catkin_INCLUDE_DIRS}  # catkin 包含目录
   ${PCL_INCLUDE_DIRS}     # PCL 包含目录
+  ${OpenCV_INCLUDE_DIRS}  # OpenCV 包含目录
   ${CMAKE_SOURCE_DIR}/fusion/include
 )
 
 add_executable(fusion
   src/my_lidar.cpp
+  src/my_camera.cpp
+  src/my_config.cpp
   src/main.cpp
 )
 
 target_link_libraries(fusion
   ${catkin_LIBRARIES}
   ${PCL_LIBRARIES}
+  ${OpenCV_LIBS}
 )

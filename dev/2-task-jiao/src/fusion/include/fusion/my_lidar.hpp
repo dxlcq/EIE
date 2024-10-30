@@ -7,13 +7,12 @@
 #include <pcl/point_types.h>                    // PCL 中不同类型的点定义
 #include <iostream>
 
-class my_lidar
-{
+class my_lidar{
 private:
     // PCL 中的点云数据格式
     pcl::PointCloud<pcl::PointXYZ>::Ptr point_cloud_ptr;
     // 点云数据是否准备好
-    bool is_cloud_ready;
+    bool point_cloud_ready;
 public:
     my_lidar();
     ~my_lidar();
