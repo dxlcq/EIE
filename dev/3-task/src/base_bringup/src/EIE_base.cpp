@@ -2,31 +2,40 @@
 #include "utils/interface.hpp"
 namespace EIE_robot
 {
-    EIE_base::EIE_base( std::unique_ptr<westonrobot::ScoutBase> EIE_status_ptr,
-                        std::unique_ptr<westonrobot::TracerBase> EIE_contral_ptr,
-                        std::unique_ptr<ros::NodeHandle> nh )
-    : EIE_status_ptr_( std::move( EIE_status_ptr ) ), EIE_contral_ptr_( std::move( EIE_contral_ptr ) ), nh_( std::move( nh ) ) 
+    EIE_base::EIE_base( std::string device_name,
+                        int32_t baud_rate,
+                        ros::NodeHandle &nh )
+    :nh_( nh ) 
     {
-    // 打印指针状态
-        std::cout << "EIE_status_ptr_: " << (EIE_status_ptr_ ? "valid" : "nullptr") << std::endl;
-        std::cout << "EIE_contral_ptr_: " << (EIE_contral_ptr_ ? "valid" : "nullptr") << std::endl;
-        std::cout << "nh_: " << (nh_ ? "valid" : "nullptr") << std::endl;
+        EIE_status_.Connect( device_name, baud_rate );
+        EIE_contral_.Connect( device_name );
+        EIE_contral_.EnableCommandedMode();
     }
 
     void EIE_base::SetupSubscription()
     {
-        motion_cmd_sub_ = nh_->subscribe( "/cmd_vel",          1, &EIE_base::MotionCmdCallback, this );
-        light_cmd_sub_  = nh_->subscribe( "/light_cmd",        1, &EIE_base::LightCmdCallback, this );
-        status_sub_     = nh_->subscribe( "/EIE_robot_status", 1, &EIE_base::StatusCallback, this );
+        if (!nh_.ok()) ROS_ERROR("NodeHandle is not initialized");
+        try {
+        std::cout<<"aaa"<<std::endl;
+        motion_cmd_sub_ = nh_.subscribe( "/cmd_vel",          1, &EIE_base::MotionCmdCallback, this );
+        std::cout<<"bbb"<<std::endl;
+        light_cmd_sub_  = nh_.subscribe( "/light_cmd",        1, &EIE_base::LightCmdCallback, this );
+        std::cout<<"ccc"<<std::endl;
+        status_sub_     = nh_.subscribe( "/EIE_robot_status", 1, &EIE_base::StatusCallback, this );
 
-        status_pub_ = nh_->advertise<base_msgs::ScoutStatus>( "/EIE_robot_status", 10 );
+        std::cout<<"ddd"<<std::endl;
+        status_pub_ = nh_.advertise<base_msgs::ScoutStatus>( "/EIE_robot_status", 10 );
+        std::cout<<"eee"<<std::endl;
+        } catch ( const std::exception& e ){
+            std::cerr << "setup func Exception caught: " << e.what() << std::endl;
+        }
     }
 
     void EIE_base::PublishStatus()
     {
         current_time_ = ros::Time::now();
         base_msgs::ScoutStatus status_msg;
-        auto state = EIE_status_ptr_->GetScoutState();
+        auto state = EIE_status_.GetScoutState();
         status_msg.header.stamp = current_time_;
 
         status_msg.linear_velocity = state.linear_velocity;
@@ -60,7 +69,9 @@ namespace EIE_robot
         westonrobot::ScoutMotionCmd cmd;
         cmd.linear_velocity  = msg->linear.x;
         cmd.angular_velocity = msg->angular.z;
-        EIE_contral_ptr_->SetMotionCommand( cmd.linear_velocity, cmd.angular_velocity );
+
+        EIE_contral_.SetMotionCommand( cmd.linear_velocity, cmd.angular_velocity );
+        // std::cout << "EIE_contral_ptr_: " << (EIE_contral_ptr_ ? "valid" : "nullptr") << std::endl;
         // EIE_status_ptr_->SendRobotCmd();
         //@TODO: 不能在这里发送控制指令, 因为发送指令的函数SendRobotCmd是private的
     }
@@ -77,64 +88,52 @@ namespace EIE_robot
             {
                 case base_msgs::ScoutLightCmd::LIGHT_CONST_OFF:
                 {
-                    cmd.front_mode = westonrobot::TracerLightCmd::LightMode::CONST_OFF;
+                    ROS_INFO( "LightCmd: CONST_OFF" );
+                    EIE_contral_.SetLightCommand({westonrobot::TracerLightCmd::LightMode::CONST_OFF, 0});
+                    sleep(3);
+                    // cmd.front_mode = westonrobot::TracerLightCmd::LightMode::CONST_OFF;
                     break;
                 }
                 case base_msgs::ScoutLightCmd::LIGHT_CONST_ON:
                 {
                     ROS_INFO( "LightCmd: CONST_ON" );
-                    cmd.front_mode = westonrobot::TracerLightCmd::LightMode::CONST_ON;
+                    EIE_contral_.SetLightCommand({westonrobot::TracerLightCmd::LightMode::CONST_ON, 0});
+                    sleep(3);
+                    // cmd.front_mode = westonrobot::TracerLightCmd::LightMode::CONST_ON;
                     break;
                 }
                 case base_msgs::ScoutLightCmd::LIGHT_BREATH:
                 {
-                    cmd.front_mode = westonrobot::TracerLightCmd::LightMode::BREATH;
+                    ROS_INFO( "LightCmd: BREATH" );
+                    EIE_contral_.SetLightCommand({westonrobot::TracerLightCmd::LightMode::BREATH, 0});
+                    sleep(8);
+                    // cmd.front_mode = westonrobot::TracerLightCmd::LightMode::BREATH;
                     break;
                 }
                 case base_msgs::ScoutLightCmd::LIGHT_CUSTOM:
                 {
-                    cmd.front_mode = westonrobot::TracerLightCmd::LightMode::CUSTOM;
-                    cmd.front_custom_value = msg->front_custom_value;
+                    ROS_INFO( "LightCmd: CUSTOM" );
+                    EIE_contral_.SetLightCommand({westonrobot::TracerLightCmd::LightMode::CUSTOM, 0});
+                    sleep(3);
+                    // cmd.front_mode = westonrobot::TracerLightCmd::LightMode::CUSTOM;
+                    // cmd.front_custom_value = msg->front_custom_value;
                     break;
                 }
             }
-            /* write only  */
-            // switch (msg->rear_mode)
-            // {
-            //     case base_msgs::ScoutLightCmd::LIGHT_CONST_OFF:
-            //     {
-            //         cmd.rear_mode = westonrobot::ScoutLightCmd::LightMode::CONST_OFF;
-            //         break;
-            //     }
-            //     case base_msgs::ScoutLightCmd::LIGHT_CONST_ON:
-            //     {
-            //         cmd.rear_mode = westonrobot::ScoutLightCmd::LightMode::CONST_ON;
-            //         break;
-            //     }
-            //     case base_msgs::ScoutLightCmd::LIGHT_BREATH:
-            //     {
-            //         cmd.rear_mode = westonrobot::ScoutLightCmd::LightMode::BREATH;
-            //         break;
-            //     }
-            //     case base_msgs::ScoutLightCmd::LIGHT_CUSTOM:
-            //     {
-            //         cmd.rear_mode = westonrobot::ScoutLightCmd::LightMode::CUSTOM;
-            //         cmd.rear_custom_value = msg->rear_custom_value;
-            //         break;
-            //     }
-            // }
 
-            EIE_contral_ptr_->SetLightCommand(cmd);
+            // EIE_contral_.SetLightCommand(cmd);
             ROS_INFO( "send cmd to light!!" );
         }
         else
         {
-            EIE_status_ptr_->DisableLightCmdControl();
+            EIE_status_.DisableLightCmdControl();
         }
     }
 
     void EIE_base::StatusCallback( const base_msgs::ScoutStatus::ConstPtr &msg )
     {
+        // std::cout << "EIE_status_ptr_: " << (EIE_status_ptr_ ? "valid" : "nullptr") << std::endl;
+        // std::cout << "wocaonmaaaaaaaa" << std::endl;
         return;
         // display(msg);
         /* 输出状态信息 */

@@ -28,9 +28,9 @@ namespace EIE_robot
     {
         public:
             explicit EIE_base( ros::NodeHandle &nh );
-            EIE_base( std::unique_ptr<westonrobot::ScoutBase> EIE_status_ptr, 
-                    std::unique_ptr<westonrobot::TracerBase> EIE_contral_ptr,
-                    std::unique_ptr<ros::NodeHandle> nh );
+            EIE_base(   std::string device_name,
+                        int32_t baud_rate,
+                        ros::NodeHandle &nh );
 
             void SetupSubscription();
 
@@ -38,9 +38,9 @@ namespace EIE_robot
 
         private:
             /* 地盘控制基类和句柄 */
-            std::unique_ptr<westonrobot::ScoutBase>  EIE_status_ptr_;
-            std::unique_ptr<westonrobot::TracerBase> EIE_contral_ptr_;
-            std::unique_ptr<ros::NodeHandle>         nh_;
+            westonrobot::ScoutBase  EIE_status_;
+            westonrobot::TracerBase EIE_contral_;
+            ros::NodeHandle         nh_;
 
             /* 话题 */
             ros::Publisher  status_pub_;
