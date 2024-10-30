@@ -1,0 +1,5 @@
+<launch>
+    <arg name="device_name" default="can0"/>
+    <node pkg="base_bringup" type="base_bringup_node" name="base_bringup_node" output="screen" args="$(arg device_name)">
+    </node>
+</launch>

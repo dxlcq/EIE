@@ -138,26 +138,26 @@ namespace EIE_robot
         return;
         // display(msg);
         /* 输出状态信息 */
-        // ROS_INFO( "----------------------------");
-        // ROS_INFO( "Received status message" );
-        // ROS_INFO( "Linear velocity: %f", msg->linear_velocity );
-        // ROS_INFO( "Angular velocity: %f", msg->angular_velocity );
-        // ROS_INFO( "Base state: %d", msg->base_state );
-        // ROS_INFO( "Control mode: %d", msg->control_mode );
-        // ROS_INFO( "Fault code: %d", msg->fault_code );
-        // ROS_INFO( "Battery voltage: %f", msg->battery_voltage );
-        // ROS_INFO( "Motor states:" );
-        // for (int i = 0; i < 4; ++i)
-        // {
-        //     ROS_INFO( "Motor %d current: %f", i, msg->motor_states[i].current );
-        //     ROS_INFO( "Motor %d rpm: %f", i, msg->motor_states[i].rpm );
-        //     ROS_INFO( "Motor %d temperature: %f", i, msg->motor_states[i].temperature );
-        // }
-        // ROS_INFO( "Light control enabled: %d", msg->light_control_enabled );
-        // ROS_INFO( "Front light mode: %d", msg->front_light_state.mode );
-        // ROS_INFO( "Front light custom value: %d", msg->front_light_state.custom_value );
-        // ROS_INFO( "Rear light mode: %d", msg->rear_light_state.mode );
-        // ROS_INFO( "Rear light custom value: %d", msg->rear_light_state.custom_value );
+        ROS_INFO( "----------------------------");
+        ROS_INFO( "Received status message" );
+        ROS_INFO( "Linear velocity: %f", msg->linear_velocity );
+        ROS_INFO( "Angular velocity: %f", msg->angular_velocity );
+        ROS_INFO( "Base state: %d", msg->base_state );
+        ROS_INFO( "Control mode: %d", msg->control_mode );
+        ROS_INFO( "Fault code: %d", msg->fault_code );
+        ROS_INFO( "Battery voltage: %f", msg->battery_voltage );
+        ROS_INFO( "Motor states:" );
+        for (int i = 0; i < 4; ++i)
+        {
+            ROS_INFO( "Motor %d current: %f", i, msg->motor_states[i].current );
+            ROS_INFO( "Motor %d rpm: %f", i, msg->motor_states[i].rpm );
+            ROS_INFO( "Motor %d temperature: %f", i, msg->motor_states[i].temperature );
+        }
+        ROS_INFO( "Light control enabled: %d", msg->light_control_enabled );
+        ROS_INFO( "Front light mode: %d", msg->front_light_state.mode );
+        ROS_INFO( "Front light custom value: %d", msg->front_light_state.custom_value );
+        ROS_INFO( "Rear light mode: %d", msg->rear_light_state.mode );
+        ROS_INFO( "Rear light custom value: %d", msg->rear_light_state.custom_value );
 
         // @TODO: 使用QT界面显示状态信息 或者 写个好看点的输出函数
     }

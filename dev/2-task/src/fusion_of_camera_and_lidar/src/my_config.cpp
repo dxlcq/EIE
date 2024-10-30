@@ -7,8 +7,8 @@
 #include <opencv2/opencv.hpp>
 
 my_config::my_config()
-{
-    this->file_path = "./src/fusion_of_camera_and_lidar/config/calibration_out.yml"; //默认是在ros_ws下运行程序，那么配置文件的相对路径就是这样的
+{   // 202410191558.yml
+    this->file_path = "./src/fusion_of_camera_and_lidar/config/202410191558.yml"; //默认是在ros_ws下运行程序，那么配置文件的相对路径就是这样的
     ROS_INFO("my_config inited!");
 }
 my_config::my_config(std::string file_path)

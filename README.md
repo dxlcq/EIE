@@ -296,7 +296,51 @@ rosrun calibration_camera_lidar calibration_toolkit
 > 有 bug，有时候需要多订阅几次（失败的时候 kill 相机，再启动）
 
 # 开发、任务 3
-
+> 启动can2usb gs_usb
+```
+sudo bash dev/3-task/src/base_bringup/scripts/setup_can2usb.bash
+#具体的信息去脚本里面看
+```
+> 测试can2usb是否成功
+```
+candump can0
+# 有数据输出就OK
+```
+> 启动状态查看和控制主程序
+```
+rosrun base_bringup base_bringup_node can0
+# 记得source 
+# 记得加can0参数，就是指定用哪个口来通信
+# 如果启动失败，就多启动几次，甚至十多次，详细原因待查明
+```
+> 电机控制
+```
+# 方法一(使用scout封装的ros封装好的键盘控制)
+roslaunch scout_bringup scout_teleop_keyboard.launch
+# 方法二(使用rostopic直接pub出msg)
+rostopic pub /cmd_vel geometry_msgs/Tlinear:
+  x: 1.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+# 不推荐，因为地盘控制有个什么看门狗，必须一直pub才可以让电机一直动，这种方式只能pub一次
+```
+> 灯光控制
+```
+# 直接pub，因为我还没有封装到程序里面，待后续完善
+rostopic pub /light_cmd base_msgs/ScoutLightCmd "{enable_cmd_light_control: false, front_mode: 0, front_custom_value: 0, rear_mode: 0,
+  rear_custom_value: 0}" 
+# @pama: enable_cmd_light_control: 是否使用上位机指令来控制灯光
+#        front_mode: 关灯 0 开灯 1 呼吸灯 2 自定义模式 3
+#        front_custom_value: 应该是亮度
+#        rear_mode: 尾灯，但是车上没有尾灯，应该是其他车型的
+#        rear_custom_value: 无需多言
+# @bref: 可以只使用部分参数，比如要开灯就
+        rostopic pub /light_cmd base_msgs/ScoutLightCmd "{enable_cmd_light_control: true, front_mode: 1}" 
+```
 
 
 # 算法：傅春耕
