@@ -350,10 +350,47 @@ rostopic pub /light_cmd base_msgs/ScoutLightCmd "{enable_cmd_light_control: fals
         rostopic pub /light_cmd base_msgs/ScoutLightCmd "{enable_cmd_light_control: true, front_mode: 1}" 
 ```
 
+# 开发、任务 4
+
+## （一）自动导航场地定位建图
+
+1. 启动激光雷达，发布base_link->laser_link的坐标变换
+
+```shell
+roslaunch scout_bringup open_rslidar.launch
+```
+
+2. 启动gmapping建图算法
+
+```shell
+roslaunch scout_bringup gmapping.launch
+```
+
+3. 用手柄遥控小车去在场景中走完。构建完地图之后，把地图保存到指定目录（一般是保存到description），下面指令地图的名称为map，可以修改，注意地图名字不要重复
+
+```shell
+rosrun map_server map_saver -f ~/catkin_ws/src/scout_base/scout_description/maps/map
+```
+
+## （二）启动自主导航
+
+1. 启动激光雷达
+
+```shell
+roslaunch scout_bringup open_rslidar.launch
+```
+
+2. 启动move_base
+
+```shell
+roslaunch scout_bringup navigation_4wd.launch
+```
+
+**注：**如需自定义打开的地图，请打开 navigation_4wd.launch 文件修改参数，如下图所示, 请在标记横线处修改为需要打开的地图名称。
+
+![navigation_4wd.launch](D:\Coding\EIE\img\navigation_4wd_launch.jpg)
 
 # 算法：傅春耕
-
-## 点云定位建图
 
 
 
