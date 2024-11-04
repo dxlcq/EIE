@@ -388,7 +388,7 @@ roslaunch scout_bringup navigation_4wd.launch
 
 **注：**如需自定义打开的地图，请打开 navigation_4wd.launch 文件修改参数，如下图所示, 请在标记横线处修改为需要打开的地图名称。
 
-![navigation_4wd.launch](D:\Coding\EIE\img\navigation_4wd_launch.jpg)
+![navigation_4wd.launch](img\navigation_4wd_launch.jpg)
 
 # 算法：傅春耕
 
