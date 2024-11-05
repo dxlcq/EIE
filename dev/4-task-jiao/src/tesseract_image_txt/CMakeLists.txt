@@ -105,7 +105,7 @@ set(tesseract_INCLUDE_DIRS /usr/include/tesseract)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
+  #INCLUDE_DIRS include
 #  LIBRARIES tesseract_image_txt
   CATKIN_DEPENDS cv_bridge realsense2_camera roscpp sensor_msgs std_msgs
 #  DEPENDS system_lib

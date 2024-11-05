@@ -1,0 +1,18 @@
+<launch>
+    <!-- 启动 AMCL（自适应蒙特卡罗定位） -->
+    <node name="amcl" pkg="amcl" type="amcl" output="screen">
+        <param name="use_map_topic" value="true"/>
+        <!-- 其他参数配置 -->
+    </node>
+
+    <!-- 启动 map_server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="/home/agilex/catkin_ws/src/scout_base/scout_description/maps
+/dxl.yaml" />
+
+    <!-- 启动 move_base -->
+    <node name="move_base" pkg="move_base" type="move_base" output="screen">
+        <param name="base_global_planner" value="navfn/NavfnROS"/>
+        <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/>
+        <!-- 其他参数配置 -->
+    </node>
+</launch>
