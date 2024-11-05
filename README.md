@@ -352,6 +352,8 @@ rostopic pub /light_cmd base_msgs/ScoutLightCmd "{enable_cmd_light_control: fals
 
 # 开发、任务 4
 
+**注意，全部得在小车内的终端上操作，因为需要打开 rviz**
+
 ## （一）自动导航场地定位建图
 
 1. 启动激光雷达，发布base_link->laser_link的坐标变换
@@ -374,19 +376,31 @@ rosrun map_server map_saver -f ~/catkin_ws/src/scout_base/scout_description/maps
 
 ## （二）启动自主导航
 
-1. 启动激光雷达
+1. 使能gs_usb内核模块
+
+```shell
+sudo modprobe gs_usb
+```
+
+2. 打开can设备且设置波特率
+
+```shell
+sudo ip link set can0 up type can bitrate 500000
+```
+
+3. 启动激光雷达
 
 ```shell
 roslaunch scout_bringup open_rslidar.launch
 ```
 
-2. 启动move_base
+4. 启动move_base
 
 ```shell
 roslaunch scout_bringup navigation_4wd.launch
 ```
 
-**注：**如需自定义打开的地图，请打开 navigation_4wd.launch 文件修改参数，如下图所示, 请在标记横线处修改为需要打开的地图名称。
+**注：** 如需自定义打开的地图，请打开 navigation_4wd.launch 文件修改参数，如下图所示, 请在标记横线处修改为需要打开的地图名称。
 
 ![navigation_4wd.launch](img\navigation_4wd_launch.jpg)
 
