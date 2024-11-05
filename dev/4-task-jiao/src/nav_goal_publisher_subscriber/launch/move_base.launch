@@ -7,7 +7,7 @@
 
     <!-- 启动 map_server -->
     <node name="map_server" pkg="map_server" type="map_server" args="/home/agilex/catkin_ws/src/scout_base/scout_description/maps
-/dxl.yaml" />
+/map.yaml" />
 
     <!-- 启动 move_base -->
     <node name="move_base" pkg="move_base" type="move_base" output="screen">
