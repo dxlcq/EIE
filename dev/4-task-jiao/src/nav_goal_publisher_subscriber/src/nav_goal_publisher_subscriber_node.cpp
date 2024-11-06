@@ -93,8 +93,8 @@ int main(int argc, char** argv) {
         if (recognizedText == "A") {
 ROS_INFO("text_recognition/result:",recognizedText);
             // 设置坐标为A对应的值
-            double x = 1.68;
-            double y = 8.98;
+            double x = 1.22;
+            double y = 1.40;
 
             // 发布导航目标点并执行导航
             publishAndNavigateGoal(pub, ac, x, y);
@@ -117,8 +117,8 @@ ROS_INFO("text_recognition/result:",recognizedText);
         } else if (recognizedText == "D") {
 ROS_INFO("text_recognition/result:",recognizedText);
             // 设置坐标为D对应的值
-	    double x = -3.94;
-            double y = 7.68;
+	    double x = -1.16;
+            double y = -1.43;
 
             // 发布导航目标点并执行导航
             publishAndNavigateGoal(pub, ac, x, y);
