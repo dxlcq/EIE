@@ -415,6 +415,26 @@ roslaunch scout_bringup navigation_4wd.launch
 
 ## 数据采集
 
+1. 获取及保存点云数据
+
+2. 获取及保存图像数据
+
+3. 获取及保存视频数据
+
 ## 数据标注
+
+1. 下载 label-studio
+
+```shell
+sudo docker pull heartexlabs/label-studio:latest
+```
+
+2. 启动 label-studio
+
+```shell
+mkdir mydata
+sudo chmod -R 777 mydata/
+sudo docker run -it -p 8080:8080 -v $(pwd)/mydata:/label-studio/data heartexlabs/label-studio:latest
+```
 
 ## 数据识别
