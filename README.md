@@ -333,20 +333,14 @@ angular:
 # 直接pub，因为我还没有封装到程序里面，待后续完善
 rostopic pub /light_cmd base_msgs/ScoutLightCmd "{enable_cmd_light_control: false, front_mode: 0, front_custom_value: 0, rear_mode: 0,
   rear_custom_value: 0}" 
-<<<<<<< HEAD
 # @pama: enable_cmd_light_control: 是否使用上位机指令来控制灯光
-=======
 # @parma: enable_cmd_light_control: 是否使用上位机指令来控制灯光
->>>>>>> 111030f04dc3020759b4ea8202ebba6bfda234ab
 #        front_mode: 关灯 0 开灯 1 呼吸灯 2 自定义模式 3
 #        front_custom_value: 应该是亮度
 #        rear_mode: 尾灯，但是车上没有尾灯，应该是其他车型的
 #        rear_custom_value: 无需多言
-<<<<<<< HEAD
 # @bref: 可以只使用部分参数，比如要开灯就
-=======
 # @brief: 可以只使用部分参数，比如要开灯就
->>>>>>> 111030f04dc3020759b4ea8202ebba6bfda234ab
         rostopic pub /light_cmd base_msgs/ScoutLightCmd "{enable_cmd_light_control: true, front_mode: 1}" 
 ```
 
