@@ -10,9 +10,9 @@
 
 </h3>
 
-* 必修 1: [车载软件开发基础](./algorithm/)
+* 必修 1: [车载软件开发基础](./dev/)
 
-* 必修 2: [智能驾驶算法基础](./dev/)
+* 必修 2: [智能驾驶算法基础](./algorithm/)
 
 * 选修 1: [智能网联汽车数据工程](./data/)
 
@@ -406,11 +406,35 @@ roslaunch scout_bringup navigation_4wd.launch
 
 # 算法：傅春耕
 
-
-
 # 算法：南智雄
 
 ## [相机标定试验](algorithm\2-相机标定实验\相机标定实验指导内容.docx)
 
-### Task 1
 
+# 数据、任务 3
+
+## 数据采集
+
+1. 获取及保存点云数据
+
+2. 获取及保存图像数据
+
+3. 获取及保存视频数据
+
+## 数据标注
+
+1. 下载 label-studio
+
+```shell
+sudo docker pull heartexlabs/label-studio:latest
+```
+
+2. 启动 label-studio
+
+```shell
+mkdir mydata
+sudo chmod -R 777 mydata/
+sudo docker run -it -p 8080:8080 -v $(pwd)/mydata:/label-studio/data heartexlabs/label-studio:latest
+```
+
+## 数据识别
