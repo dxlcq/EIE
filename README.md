@@ -402,8 +402,7 @@ roslaunch scout_bringup navigation_4wd.launch
 
 # 算法：南智雄
 
-## [相机标定试验](algorithm\2-相机标定实验\相机标定实验指导内容.docx)
-
+# 算法：古富强
 
 # 数据、任务 3
 
