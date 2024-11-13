@@ -36,3 +36,8 @@ rosrun tesseract_image_txt tesseract_image_txt_node
 ```
 rosrun nav_goal_publisher_subscriber nav_goal_publisher_subscriber_node
 ```
+
+## topic
+记得开usb2can
+
+记得关闭遥控器操控
