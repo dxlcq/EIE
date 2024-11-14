@@ -451,4 +451,10 @@ roslaunch scout_bringup navigation_4wd.launch
     sudo docker run -it -p 8080:8080 -v $(pwd)/mydata:/label-studio/data heartexlabs/label-studio:latest
     ```
 
+3. 启动预标注
+
+    > label-studio 的插件
+
+
+
 ## 数据识别
