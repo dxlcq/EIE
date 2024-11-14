@@ -11,11 +11,21 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   cv_bridge # OpenCV 和 ROS 图像消息类型之间的转换
+
+  pcl_ros
+  pcl_conversions
 )
 
 find_package(OpenCV REQUIRED COMPONENTS
-  highgui   # OpenCV 图像显示功能
+  #highgui   # OpenCV 图像显示功能
 )
+
+find_package(PCL REQUIRED COMPONENTS
+  common
+  io
+  visualization
+)
+
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -165,10 +175,12 @@ target_link_libraries(img
 
 target_link_libraries(vid
   ${catkin_LIBRARIES}
+  ${OpenCV_LIBS}
 )
 
 target_link_libraries(pcl
   ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
 )
 
 #############
