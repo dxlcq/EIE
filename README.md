@@ -410,24 +410,51 @@ roslaunch scout_bringup navigation_4wd.launch
 
 1. 获取及保存点云数据
 
+    ```shell
+    cd /media/agilex/ly/
+    source ~/dxl/EIE/data/3-task/get_and_save_ss_ros/devel/setup.bash
+    roslaunch scout_bringup open_rslidar.launch
+    rosrun get_and_save pcl
+    ```
+
 2. 获取及保存图像数据
 
+    ```shell
+    cd /media/agilex/ly/
+    source ~/dxl/EIE/data/3-task/get_and_save_ss_ros/devel/setup.bash
+    roslaunch realsense2_camera rs_camera.launch
+    rosrun get_and_save img
+    ````
+
 3. 获取及保存视频数据
+
+    ```shell
+    cd /media/agilex/ly/
+    source ~/dxl/EIE/data/3-task/get_and_save_ss_ros/devel/setup.bash
+    roslaunch realsense2_camera rs_camera.launch
+    rosrun get_and_save vid
+    ```
 
 ## 数据标注
 
 1. 下载 label-studio
 
-```shell
-sudo docker pull heartexlabs/label-studio:latest
-```
+    ```shell
+    sudo docker pull heartexlabs/label-studio:latest
+    ```
 
 2. 启动 label-studio
 
-```shell
-mkdir mydata
-sudo chmod -R 777 mydata/
-sudo docker run -it -p 8080:8080 -v $(pwd)/mydata:/label-studio/data heartexlabs/label-studio:latest
-```
+    ```shell
+    mkdir mydata
+    sudo chmod -R 777 mydata/
+    sudo docker run -it -p 8080:8080 -v $(pwd)/mydata:/label-studio/data heartexlabs/label-studio:latest
+    ```
+
+3. 启动预标注
+
+    > label-studio 的插件
+
+
 
 ## 数据识别
