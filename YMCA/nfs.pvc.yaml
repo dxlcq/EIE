@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+
+metadata:
+  name: nfs.pvc
+
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Gi
+  volumeName: nfs # 指定 PersistentVolume 的名称

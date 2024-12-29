@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cuda-test-job
+spec:
+  parallelism: 10  # 并行运行的 Pod 数量
+  completions: 100 # 总共需要运行的 Pod 数量
+  template:
+    metadata:
+      name: cuda-test
+    spec:
+      containers:
+      - name: cuda-container
+        image: nvidia/cuda:12.4.1-base-ubuntu22.04
+        resources:
+          limits:
+            nvidia.com/gpu: 1   # 每个 Pod 请求 1 个 GPU
+        command: ["nvidia-smi"]
+      restartPolicy: Never
