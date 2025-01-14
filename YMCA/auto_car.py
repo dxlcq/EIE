@@ -8,7 +8,7 @@ import numpy as np
 
 def main():
     # 连接到CARLA服务器
-    client = carla.Client('localhost', 2000)
+    client = carla.Client('10.0.0.31', 2000)
     client.set_timeout(10.0)  # 设置超时时间为10秒
 
     world = None
