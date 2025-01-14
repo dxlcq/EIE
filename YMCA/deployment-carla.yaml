@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: deployment-carla
+  namespace: carla-base
+
+spec:
+  replicas: 1
+  
+  selector:
+    matchLabels:  # 匹配标签
+      app: carla
+
+  template:       # 模板，起 pod
+    metadata:
+      labels:     # 设置标签
+        app: carla
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s1
+      containers:
+      - name: carla
+        image: carlasim/carla:0.9.15
+        command: ["/bin/bash", "./CarlaUE4.sh", "-RenderOffScreen"]
+        securityContext:
+          privileged: true
+        resources:
+          limits:
+            nvidia.com/gpu: 1

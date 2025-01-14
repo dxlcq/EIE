@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: service-carla
+  namespace: carla-base
+
+spec:
+  selector:
+    app: carla
+  ports:
+    - name: carla2000
+      protocol: TCP
+      port: 2000
+      targetPort: 2000
+      nodePort: 32000
+    - name: carla2001
+      protocol: UDP
+      port: 2001
+      targetPort: 2001
+      nodePort: 32001
+  type: NodePort
