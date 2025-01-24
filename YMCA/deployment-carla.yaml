@@ -17,17 +17,24 @@ spec:
       labels:     # 设置标签
         app: carla
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: k8s1
+      #nodeSelector:
+      #  kubernetes.io/hostname: k8s1
+      volumes:
+        - name: p-nfs
+          persistentVolumeClaim:
+            claimName: pvc-nfs  # 引用 PVC 名称
       containers:
-      - name: carla
-        image: carlasim/carla:0.9.15
-        command: ["/bin/bash", "./CarlaUE4.sh", "-RenderOffScreen", "-carla-rpc-port=32000"]
-        securityContext:
-          privileged: true
-        resources:
-          limits:
-            nvidia.com/gpu: 1
-        ports:
-        - containerPort: 32000
-        - containerPort: 32001
+        - name: carla
+          image: carlasim/carla:0.9.15
+          command: ["/bin/bash", "./CarlaUE4.sh", "-RenderOffScreen", "-carla-rpc-port=32000"]
+          securityContext:
+            privileged: true
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+          ports:
+            - containerPort: 32000
+            - containerPort: 32001
+          volumeMounts:
+            - name: p-nfs
+              mountPath: /mnt/nfs  # 挂载路径
