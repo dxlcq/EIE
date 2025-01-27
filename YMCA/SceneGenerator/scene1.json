@@ -1,0 +1,37 @@
+{
+    "weather": {
+        "cloudiness": 80,
+        "precipitation": 80,
+        "precipitation_deposits": 20,
+        "sun_azimuth_angle": 180,
+        "sun_altitude_angle": -90
+    },
+    "vehicles": [
+        {
+          "type": "vehicle.tesla.model3",
+          "transform": {
+            "x": -110.0,
+            "y": 0.0,
+            "z": 1.0,
+            "roll": 0.0,
+            "pitch": 0.0,
+            "yaw": 90.0
+          },
+          "speed": 20,
+          "auto": true
+        },
+        {
+          "type": "vehicle.audi.tt",
+          "transform": {
+            "x": -110.0,
+            "y": -20.0,
+            "z": 1.0,
+            "roll": 0.0,
+            "pitch": 0.0,
+            "yaw": 90.0
+          },
+          "speed": 10,
+          "auto": true
+        }
+      ]
+}
