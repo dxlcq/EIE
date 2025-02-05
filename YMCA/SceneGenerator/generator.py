@@ -3,90 +3,11 @@ import json
 import time
 import sys
 import math
-
-import numpy as np
 import cv2
-import threading
-import time
-from flask import Flask, Response
-
-# 创建一个简单的Flask应用来提供视频流
-app = Flask(__name__)
-
-# 使用全局变量保存相机图像帧
-frame = None
-frame_lock = threading.Lock()
-frame_event = threading.Event()
-
-# 通过CARLA创建相机
-def create_camera(client, world):
-    blueprint_library = world.get_blueprint_library()
-    camera_bp = blueprint_library.find('sensor.camera.rgb')
-
-    # 设置相机属性（可根据需要调整分辨率、视场等）
-    camera_bp.set_attribute('image_size_x', '1920')
-    camera_bp.set_attribute('image_size_y', '1080')
-    camera_bp.set_attribute('fov', '90')
-
-    # 设置相机位置（直接在世界中生成）
-    spawn_point = carla.Transform(carla.Location(x=-100.0, y=90.0, z=50.0), carla.Rotation(pitch=-90.0, yaw=0.0, roll=0.0))
-
-    # 在世界中生成相机
-    camera = world.spawn_actor(camera_bp, spawn_point)
-
-    # 设置回调函数获取图像
-    camera.listen(lambda image: process_image(image))
-    return camera
-
-# 处理相机图像
-def process_image(image):
-    global frame
-    try:
-        # 使用 Raw 转换器获取原始 BGRA 图像
-        image.convert(carla.ColorConverter.Raw)
-        
-        # 将图像数据转换为 NumPy 数组
-        array = np.frombuffer(image.raw_data, dtype=np.uint8)
-        
-        # 重塑数组形状为 (高度, 宽度, 4) 对应 BGRA
-        array = array.reshape((image.height, image.width, 4))
-        
-        # 转换为 BGR 格式，去除 alpha 通道
-        frame_bgr = array[:, :, :3]  # 直接使用 BGR，无需颜色转换
-        
-        # 更新全局帧
-        with frame_lock:
-            frame = frame_bgr
-        
-        # 通知有新帧可用
-        frame_event.set()
-        
-    except Exception as e:
-        print(f"Error processing image: {e}")
-
-# 视频流生成器
-def generate():
-    while True:
-        frame_event.wait()
-        with frame_lock:
-            if frame is None:
-                frame_event.clear()
-                continue
-            ret, jpeg = cv2.imencode('.jpg', frame)
-        if ret:
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tobytes() + b'\r\n\r\n')
-        frame_event.clear()
-
-# Flask 路由，显示视频流
-@app.route('/video_feed')
-def video_feed():
-    return Response(generate(),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
-
-# 启动 Flask 服务器
-def run_flask():
-    app.run(host='0.0.0.0', port=5000, threaded=True, debug=False)
+from datetime import datetime
+import os
+import numpy as np
+import gc
 
 def setWeather(world, weatherScene):
     world.set_weather( 
@@ -101,7 +22,7 @@ def setWeather(world, weatherScene):
         )
     )
 
-def setVehicles(world, vehicleScene):
+def setVehicles(world, vehicleScene, log_root):
     vehicle = world.spawn_actor(
         world.get_blueprint_library().find(vehicleScene["type"]),
         carla.Transform(
@@ -120,7 +41,135 @@ def setVehicles(world, vehicleScene):
     # 开启自动驾驶
     if vehicleScene["auto"] == "true":
         vehicle.set_autopilot(True)
+
+    # 创建日志目录
+    log_dir = f"{log_root}/{datetime.now().strftime('%Y%m%d_%H%M%S')}_{vehicle.id}"
+    os.makedirs(log_dir, exist_ok=True)
+
+    # 初始化数据记录文件
+    data_file = open(f"{log_dir}/vehicle_data.csv", "w")
+    data_file.write("timestamp,speed(m/s),acceleration(m/s2),throttle,steer,brake\n")
     
+    # 状态记录缓存
+    last_speed = 0.0
+    last_time = time.time()
+
+    def record_vehicle_data():
+        nonlocal last_speed, last_time
+        current_time = time.time()
+        delta_time = current_time - last_time
+        
+        # 获取车辆状态
+        control = vehicle.get_control()
+        velocity = vehicle.get_velocity()
+        current_speed = 3.6 * math.sqrt(velocity.x**2 + velocity.y**2 + velocity.z**2)  # 转为km/h
+        
+        # 计算加速度
+        acceleration = (current_speed - last_speed) / delta_time if delta_time > 0 else 0.0
+        
+        # 写入数据
+        data_file.write(
+            f"{current_time:.2f},"
+            f"{current_speed/3.6:.2f},"  # 转回m/s
+            f"{acceleration:.2f},"
+            f"{control.throttle:.2f},"
+            f"{control.steer:.2f},"
+            f"{control.brake:.2f}\n"
+        )
+
+        # 保存数据
+        data_file.flush()
+        
+        # 更新缓存
+        last_speed = current_speed
+        last_time = current_time
+
+    # 摄像头配置函数
+    def setup_camera(vehicle, config, log_dir):
+        camera_bp = world.get_blueprint_library().find(config["type"])
+        for attr, value in config["attributes"].items():
+            camera_bp.set_attribute(attr, str(value))
+
+        # 创建摄像头实例
+        camera = world.spawn_actor(
+            camera_bp,
+            carla.Transform(
+                carla.Location(*config["location"]),
+                carla.Rotation(*config["rotation"])
+            ),
+            attach_to=vehicle
+        )
+
+        # 初始化视频写入器
+        fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        out = cv2.VideoWriter(
+            f"{log_dir}/{config['name']}.avi",
+            fourcc,
+            config["fps"],
+            (config["width"], config["height"])
+        )
+
+        # 图像处理回调
+        def sensor_callback(image):
+            array = np.frombuffer(image.raw_data, dtype=np.uint8)
+            array = np.reshape(array, (image.height, image.width, 4))
+            array = array[:, :, :3]
+            out.write(array)
+
+        camera.listen(sensor_callback)
+        return camera, out
+
+    # 配置并安装摄像头
+    cameras = []
+    video_writers = []
+    
+    # 前置摄像头配置
+    front_cam_config = {
+        "type": "sensor.camera.rgb",
+        "name": "front_view",
+        "attributes": {
+            "image_size_x": "1280",
+            "image_size_y": "720",
+            "fov": "110"
+        },
+        "location": (2.0, 0.0, 1.4),
+        "rotation": (0.0, 0.0, 0.0),
+        "fps": 20,
+        "width": 1280,
+        "height": 720
+    }
+    
+    # 第三视角配置
+    third_cam_config = {
+        "type": "sensor.camera.rgb",
+        "name": "third_person_view",
+        "attributes": {
+            "image_size_x": "1920",
+            "image_size_y": "1080",
+            "fov": "90"
+        },
+        "location": (-8.0, 0.0, 6.0),
+        "rotation": (-25.0, 0.0, 0.0),
+        "fps": 20,
+        "width": 1920,
+        "height": 1080
+    }
+
+    # 安装摄像头
+    for config in [front_cam_config, third_cam_config]:
+        cam, writer = setup_camera(vehicle, config, log_dir)
+        cameras.append(cam)
+        video_writers.append(writer)
+
+    # 将资源引用附加到车辆对象
+    vehicle.data_recorder = {
+        "log_dir": log_dir,
+        "data_file": data_file,
+        "cameras": cameras,
+        "writers": video_writers,
+        "record_func": record_vehicle_data
+    }
+
     return vehicle
 
 def loadWorldScene(sceneFile):
@@ -148,11 +197,11 @@ def lanChange(vehicle):
         print(f"检测到前方车辆，距离射线起点: {distance_to_hit:.2f}米")
 
         # 安全距离判断
-        if distance_to_hit < 6.0:
+        if distance_to_hit < 5.0:
             print("执行左转避让")
             vehicle.apply_control(carla.VehicleControl(
-                throttle=0.5, 
-                steer=-0.8,
+                throttle=0.3, 
+                steer=-0.5,
             ))
             vehicle.set_autopilot(False)
 
@@ -162,21 +211,14 @@ def lanChange(vehicle):
     vehicle.set_autopilot(True)
 
 def main():
+    gc.collect()
     client = carla.Client(sys.argv[1], int(sys.argv[2]))
-    client.set_timeout(10)  
+    client.set_timeout(10)
 
     client.reload_world()                   # 重新加载世界
-    time.sleep(6)                           # 等待世界加载完成
+    time.sleep(10)                          # 等待世界加载完成
     world = client.get_world()              # 获取世界
     scene = loadWorldScene(sys.argv[3])     # 加载场景
-
-    # 摄像机
-    camera = create_camera(client, world)
-    print("Camera spawned.")
-
-    flask_thread = threading.Thread(target=run_flask)
-    flask_thread.start()
-    print("Flask server started at http://0.0.0.0:5000/video_feed")
 
     vs = []
 
@@ -185,12 +227,13 @@ def main():
             setWeather(world, scene["weather"])
         if "vehicles" in scene:
             for vehicleScene in scene["vehicles"]:
-                vs.append(setVehicles(world, vehicleScene))
+                vs.append(setVehicles(world, vehicleScene, "/home/jiao/log/"))
         
-        while True:
+        for i in range(20): # 模拟20秒
             for v in vs:
                 if v.type_id == "vehicle.tesla.model3":
-                    lanChange(v)    # 是否需要变道    
+                    lanChange(v)    # 是否需要变道
+                    v.data_recorder["record_func"]()  # 记录车辆数据
             time.sleep(1)
     except KeyError as e:
         print(f"键错误: {e}")

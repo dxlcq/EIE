@@ -22,7 +22,7 @@
         {
           "type": "vehicle.audi.tt",
           "transform": {
-            "x": -112,
+            "x": -111.2,
             "y": 100.0,
             "z": 1.0,
             "roll": 0.0,
