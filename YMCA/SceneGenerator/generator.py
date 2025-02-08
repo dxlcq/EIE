@@ -227,7 +227,7 @@ def main():
             setWeather(world, scene["weather"])
         if "vehicles" in scene:
             for vehicleScene in scene["vehicles"]:
-                vs.append(setVehicles(world, vehicleScene, "/home/jiao/log/"))
+                vs.append(setVehicles(world, vehicleScene, "/mnt/nfs/"))
         
         for i in range(20): # 模拟20秒
             for v in vs:
