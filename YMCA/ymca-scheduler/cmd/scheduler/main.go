@@ -9,10 +9,6 @@ import (
     "k8s.io/kubernetes/cmd/kube-scheduler/app" // 调度器的入口
 )
 
-// make && sudo ./scheduler --kubeconfig=/root/.kube/config --secure-port=10086 --authentication-kubeconfig=/root/.kube/config --authorization-kubeconfig=/root/.kube/config --leader-elect=false
-
-// GOOS=linux GOARCH=amd64 go build -o ymca-scheduler cmd/scheduler/main.go
-
 func main() {
 
     command := app.NewSchedulerCommand(         // 创建调度器

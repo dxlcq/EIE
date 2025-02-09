@@ -1,4 +1,3 @@
 FROM ubuntu:22.04
-WORKDIR .
-COPY ymca-scheduler .
-CMD ["ymca-scheduler"]
+WORKDIR /usr/local/bin
+COPY ymca-scheduler /usr/local/bin/ymca-scheduler

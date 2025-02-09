@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ymca-scheduler
+  namespace: carla-base
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: ymca-scheduler
+  template:
+    metadata:
+      labels:
+        component: ymca-scheduler
+    spec:
+      priorityClassName: system-cluster-critical
+      serviceAccountName: ymca-scheduler-sa
+      automountServiceAccountToken: true
+      containers:
+      - name: scheduler
+        image: dxlcq/ymca-scheduler
+        command:
+          - /usr/local/bin/ymca-scheduler
+          - --config=/etc/kubernetes/config-ymca-scheduler.yaml
+          - --authentication-kubeconfig=/etc/kubernetes/auth/scheduler.conf
+          - --authorization-kubeconfig=/etc/kubernetes/auth/scheduler.conf
+        volumeMounts:
+        - name: volume-config-ymca-scheduler
+          mountPath: /etc/kubernetes/config-ymca-scheduler.yaml
+          subPath: config-ymca-scheduler.yaml  # 使用subPath避免覆盖目录
+        - name: volume-kubeconfig
+          mountPath: /etc/kubernetes/auth/scheduler.conf
+          subPath: ""  # 必须显式声明空subPath
+          readOnly: true
+      volumes:
+      - name: volume-config-ymca-scheduler
+        configMap:
+          name: config-ymca-scheduler
+          items:
+            - key: config-ymca-scheduler.yaml  # 明确指定ConfigMap键
+              path: config-ymca-scheduler.yaml
+      - name: volume-kubeconfig
+        hostPath:
+          path: /etc/kubernetes/scheduler.conf
+          type: File  # 严格指定文件类型

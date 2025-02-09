@@ -1,0 +1,32 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ymca-scheduler-cr
+rules:
+- apiGroups: [""]
+  resources: 
+    - "nodes"
+    - "pods"
+    - "services"
+    - "endpoints"
+    - "events"
+    - "configmaps"
+    - "namespaces"
+    - "persistentvolumes"
+    - "persistentvolumeclaims"
+    - "replicationcontrollers"
+    - "pods/binding"       # 绑定权限
+    - "pods/status"        # 状态更新权限
+  verbs: ["get", "list", "watch", "create", "update", "patch"]  # 权限
+- apiGroups: ["apps"]
+  resources: ["replicasets", "statefulsets", "deployments"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["storage.k8s.io"]
+  resources: ["storageclasses", "csinodes", "csidrivers", "csistoragecapacities"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["coordination.k8s.io"]
+  resources: ["leases"]
+  verbs: ["get", "create", "update"]
+- apiGroups: ["policy"]
+  resources: ["poddisruptionbudgets"]
+  verbs: ["get", "list", "watch"]

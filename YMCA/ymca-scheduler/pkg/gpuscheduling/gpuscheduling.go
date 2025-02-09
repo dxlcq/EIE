@@ -26,7 +26,7 @@ func (pl *ymca) Name() string {
 func (pl *ymca) Filter(ctx context.Context, state *framework.CycleState, pod *v1.Pod, nodeInfo *framework.NodeInfo) *framework.Status {
     log.Println("🥵 开始 Filter")
     // 排除没有gpu=true标签的节点
-    if nodeInfo.Node().Labels["cpu"] != "true" {
+    if nodeInfo.Node().Labels["gpu"] != "true" {
         return framework.NewStatus(framework.Unschedulable, "Node: "+nodeInfo.Node().Name)
     }
     return framework.NewStatus(framework.Success, "Node: "+nodeInfo.Node().Name)

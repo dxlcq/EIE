@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-ymca-scheduler
+  namespace: carla-base
+data:
+  config-ymca-scheduler.yaml: |
+    apiVersion: kubescheduler.config.k8s.io/v1
+    kind: KubeSchedulerConfiguration
+    leaderElection:
+      leaderElect: false
+    profiles:
+      - schedulerName: ymca-scheduler
+        plugins:
+          filter:
+            enabled:
+              - name: ymca-scheduler
