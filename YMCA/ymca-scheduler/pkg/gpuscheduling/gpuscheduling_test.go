@@ -85,7 +85,7 @@ users:
                 t.Fatal(err)
             }
 
-            fs.Set("secure-port", "10086")                      // 手动设置参数
+            fs.Set("secure-port", "10086")                      // 手动设置参数，在部署的时候需要删除
             
             // 我也不知道在干嘛
             ctx := context.Background()                         // 创建上下文

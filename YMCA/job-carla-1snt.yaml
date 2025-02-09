@@ -10,7 +10,7 @@ spec:
   template:
     metadata:
       labels:
-        only: one
+        only: one1
     
     spec:
       affinity:
@@ -21,13 +21,17 @@ spec:
               - key: only
                 operator: In    # 节点中存在 key:value
                 values:
-                - one
+                - one2
+              - key: only
+                operator: In    # 节点中存在 key:value
+                values:
+                - one3
             topologyKey: "kubernetes.io/hostname"
       
       containers:
-      - name: carla-1s1t
-        image: dxlcq/scene1
-        command: ["python", "generator.py", "10.0.0.30", "32000", "scene.json"]
+      - name: carla-1t
+        image: dxlcq/scene
+        command: ["python", "generator.py", "10.0.0.30", "32000", "scene1.json"]
         volumeMounts:
           - name: nfs
             mountPath: /mnt/nfs
@@ -38,4 +42,5 @@ spec:
         - name: nfs
           persistentVolumeClaim:
             claimName: pvc-nfs
-    
+      
+      nodeName: k8s2

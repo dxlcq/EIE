@@ -13,6 +13,8 @@ RUN apt-get update && apt-get install -y \
 RUN pip install carla==0.9.15 opencv-python numpy
 
 COPY generator.py /app
-COPY scene.json /app
+COPY scene1.json /app
+COPY scene2.json /app
+COPY scene3.json /app
 
 ENTRYPOINT ["python", "generator.py"]
