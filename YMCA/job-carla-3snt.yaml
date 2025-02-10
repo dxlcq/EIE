@@ -10,10 +10,20 @@ spec:
   template:
     metadata:
       labels:
-        only: one3
+        only: one
     
     spec:
       affinity:
+        
+        nodeAffinity:                                     # 节点亲和
+          requiredDuringSchedulingIgnoredDuringExecution: # 硬亲和
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In    # 节点中存在 key:value
+                values:
+                - k8s2
+        
         podAntiAffinity:                                  # pod 反亲和
           requiredDuringSchedulingIgnoredDuringExecution: # 硬亲和
           - labelSelector:
@@ -21,11 +31,7 @@ spec:
               - key: only
                 operator: In    # 节点中存在 key:value
                 values:
-                - one1
-              - key: only
-                operator: In    # 节点中存在 key:value
-                values:
-                - one2
+                - one
             topologyKey: "kubernetes.io/hostname"
       
       containers:
@@ -42,6 +48,3 @@ spec:
         - name: nfs
           persistentVolumeClaim:
             claimName: pvc-nfs
-      
-      nodeName: k8s2
-    
