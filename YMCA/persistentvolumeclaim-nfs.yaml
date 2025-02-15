@@ -3,12 +3,12 @@ kind: PersistentVolumeClaim
 
 metadata:
   name: pvc-nfs
-  namespace: carla-base
+  namespace: carla
 
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 100Gi
+      storage: 500Gi
   volumeName: pv-nfs # 指定 PersistentVolume 的名称
