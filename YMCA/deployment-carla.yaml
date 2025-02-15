@@ -21,12 +21,12 @@ spec:
       containers:
         - name: c-carla
           image: carlasim/carla:0.9.15
-          command: ["/bin/bash", "./CarlaUE4.sh", "-RenderOffScreen"]
+          command: ["/bin/bash", "./CarlaUE4.sh", "-RenderOffScreen", "-carla-rpc-port=32000"]
           securityContext:          # 启用特权模式
             privileged: true
           resources:                # 设置资源限制
             limits:
               nvidia.com/gpu: 1
           ports:
-            - containerPort: 2000
-            - containerPort: 2001
+            - containerPort: 32000
+            - containerPort: 32001

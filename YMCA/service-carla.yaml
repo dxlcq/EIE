@@ -6,16 +6,18 @@ metadata:
   namespace: carla
 
 spec:
-  type: ClusterIP       # 集群内部访问
+  type: NodePort        # 集群外部访问
 
   selector:
     app: po-carla
 
   ports:
-    - name: carla2000
-      targetPort: 2000  # Pod 端口
-      port: 2000        # Service 端口
+    - name: carla32000
+      targetPort: 32000 # Pod 端口
+      port: 32000       # Service 端口
+      nodePort: 32000   # Node 端口
 
-    - name: carla2001
-      port: 2001
-      targetPort: 2001
+    - name: carla32001
+      port: 32001
+      targetPort: 32001
+      nodePort: 32001
