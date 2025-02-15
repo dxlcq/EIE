@@ -3,22 +3,19 @@ kind: Service
 
 metadata:
   name: service-carla
-  namespace: carla-base
+  namespace: carla
 
 spec:
+  type: ClusterIP       # 集群内部访问
+
   selector:
-    app: carla
+    app: po-carla
 
   ports:
     - name: carla2000
-      protocol: TCP
-      port: 32000
-      targetPort: 32000
-      nodePort: 32000
-    - name: carla2001
-      protocol: TCP
-      port: 32001
-      targetPort: 32001
-      nodePort: 32001
+      targetPort: 2000  # Pod 端口
+      port: 2000        # Service 端口
 
-  type: NodePort
+    - name: carla2001
+      port: 2001
+      targetPort: 2001

@@ -3,38 +3,30 @@ kind: Deployment
 
 metadata:
   name: deployment-carla
-  namespace: carla-base
+  namespace: carla
 
 spec:
-  replicas: 1
+  replicas: 2     # 副本数量
   
-  selector:
-    matchLabels:  # 匹配标签
-      app: carla
+  selector:       # 选择器
+    matchLabels:
+      app: po-carla
 
   template:       # 模板，起 pod
     metadata:
       labels:     # 设置标签
-        app: carla
+        app: po-carla
+    
     spec:
-      #nodeSelector:
-      #  kubernetes.io/hostname: k8s1
-      volumes:
-        - name: p-nfs
-          persistentVolumeClaim:
-            claimName: pvc-nfs  # 引用 PVC 名称
       containers:
-        - name: carla
+        - name: c-carla
           image: carlasim/carla:0.9.15
-          command: ["/bin/bash", "./CarlaUE4.sh", "-RenderOffScreen", "-carla-rpc-port=32000"]
-          securityContext:
+          command: ["/bin/bash", "./CarlaUE4.sh", "-RenderOffScreen"]
+          securityContext:          # 启用特权模式
             privileged: true
-          resources:
+          resources:                # 设置资源限制
             limits:
               nvidia.com/gpu: 1
           ports:
-            - containerPort: 32000
-            - containerPort: 32001
-          volumeMounts:
-            - name: p-nfs
-              mountPath: /mnt/nfs  # 挂载路径
+            - containerPort: 2000
+            - containerPort: 2001
