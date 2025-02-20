@@ -2,8 +2,8 @@ import carla
 import time
 
 def main():
-    client = carla.Client('10.0.0.31', 2000)
-    client.set_timeout(10)                       # 超时设置
+    client = carla.Client('180.85.207.27', 2000)
+    client.set_timeout(2)                       # 超时设置
     world = client.get_world()
 
     def change_world(string):
@@ -28,11 +28,11 @@ def main():
     # 相机蓝图
     camera_bp = world.get_blueprint_library().find("sensor.camera.rgb")
     camera_spawn_point = carla.Transform(
-        carla.Location(x=-100.0, y=90.0, z=50.0),       # 前后，左右，上下
+        carla.Location(x=20.0, y=-60.0, z=30.0),       # 前后，左右，上下
         carla.Rotation(pitch=-90.0, yaw=0.0, roll=0.0)  # 俯仰，偏航，翻滚
     )
-    camera_bp.set_attribute('image_size_x', '1920')  # 设置图像宽度
-    camera_bp.set_attribute('image_size_y', '1080')  # 设置图像高度
+    camera_bp.set_attribute('image_size_x', '1080')  # 设置图像宽度
+    camera_bp.set_attribute('image_size_y', '1920')  # 设置图像高度
 
     # 相机演员
     camera_actor = world.spawn_actor(camera_bp, camera_spawn_point)
@@ -47,7 +47,7 @@ def main():
     try:
         while True:
             print(f"当前时间: {world.get_snapshot().timestamp}")
-            time.sleep(0.3)
+            time.sleep(0.5)
             break
     except KeyboardInterrupt:
         print("退出程序")

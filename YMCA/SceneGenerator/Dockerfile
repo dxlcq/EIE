@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
     libglib2.0-0
 
-RUN pip install carla==0.9.15 opencv-python numpy
+RUN pip install carla==0.9.15 opencv-python numpy shapely networkx
 
 COPY generator.py /app
 COPY scene1.json /app

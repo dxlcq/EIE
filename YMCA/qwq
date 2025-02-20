@@ -1,4 +1,4 @@
-kubectl -n carla get po -n carla
-#kubectl -n carla get service -n carla &&
-#kubectl -n carla get pvc -n carla &&
+kubectl -n carla get po -o wide
+#kubectl -n carla get service -n carla
+#kubectl -n carla get pvc -n carla
 #kubectl -n carla get pv

@@ -19,12 +19,12 @@ def create_camera(client, world):
     camera_bp = blueprint_library.find('sensor.camera.rgb')
 
     # 设置相机属性（可根据需要调整分辨率、视场等）
-    camera_bp.set_attribute('image_size_x', '800')
-    camera_bp.set_attribute('image_size_y', '600')
+    camera_bp.set_attribute('image_size_x', '1080')
+    camera_bp.set_attribute('image_size_y', '1920')
     camera_bp.set_attribute('fov', '90')
 
     # 设置相机位置（直接在世界中生成）
-    spawn_point = carla.Transform(carla.Location(x=-60.0, y=5.0, z=5.0), carla.Rotation(pitch=-30.0, yaw=-30.0, roll=0.0))
+    spawn_point = carla.Transform(carla.Location(x=20.0, y=-60.0, z=30.0), carla.Rotation(pitch=-90.0, yaw=0.0, roll=0.0))
 
     # 在世界中生成相机
     camera = world.spawn_actor(camera_bp, spawn_point)
@@ -85,11 +85,12 @@ def run_flask():
 
 # 主函数
 def main():
-    client = carla.Client('10.0.0.30', 32000)
+    client = carla.Client('180.85.207.27', 2000)
     client.set_timeout(10.0)
 
     try:
         world = client.get_world()
+        print("连接成功")
     except RuntimeError as e:
         print(f"Failed to connect to CARLA server: {e}")
         return
