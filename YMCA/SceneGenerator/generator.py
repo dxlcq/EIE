@@ -212,6 +212,8 @@ def main(): # python generator.py localhost 32000 scene1.json /mnt/nfs/job1
     client.set_timeout(10)
 
     try:
+        # 重新加载世界会导致程序崩溃
+
         #client.reload_world()       # 重新加载世界
         #time.sleep(10)              # 等待世界加载完成
         world = client.get_world()  # 获取世界
@@ -219,6 +221,10 @@ def main(): # python generator.py localhost 32000 scene1.json /mnt/nfs/job1
     except RuntimeError as e:
         print(f"连接到 CARLA 失败: {e}")
         return
+
+    # 删除所有车辆
+    for actor in world.get_actors().filter('vehicle.*'):
+        actor.destroy()
 
     try:
         vs = []
@@ -230,7 +236,7 @@ def main(): # python generator.py localhost 32000 scene1.json /mnt/nfs/job1
                 vs.append(Vehicle(world, sceneVehicle, sys.argv[4]))
         
         # 保存数据
-        logDir = f"{sys.argv[4]}/{datetime.now().strftime('%m%d_%H:%M:%S')}"
+        logDir = f"{sys.argv[4]}/{datetime.now().strftime('%m%d_%H:%M:%S')}-{vs[0].vehicle.id}-{vs[1].vehicle.id}"
         os.makedirs(logDir, exist_ok=True)
         # 全局摄像头
         cameraGodBp = world.get_blueprint_library().find("sensor.camera.rgb")

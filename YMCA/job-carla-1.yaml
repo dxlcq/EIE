@@ -1,18 +1,21 @@
 apiVersion: batch/v1
 kind: Job
+
 metadata:
-  name: job-carla-2snt
-  namespace: carla-base
+  name: job-carla-1
+  namespace: carla
 
 spec:
-  parallelism: 1    # 并行运行的 Pod 数量
+  parallelism: 3    # 并行运行的 Pod 数量
   completions: 10   # 总共需要运行的 Pod 数量
   template:
     metadata:
       labels:
-        only: one
+        only: one 
     
     spec:
+      hostNetwork: true # 使用宿主机网络
+
       affinity:
         
         nodeAffinity:                                     # 节点亲和
@@ -22,7 +25,9 @@ spec:
               - key: kubernetes.io/hostname
                 operator: In    # 节点中存在 key:value
                 values:
+                - k8s1          # 只允许调度到 GPU 节点
                 - k8s2
+                - k8s3
         
         podAntiAffinity:                                  # pod 反亲和
           requiredDuringSchedulingIgnoredDuringExecution: # 硬亲和
@@ -31,20 +36,23 @@ spec:
               - key: only
                 operator: In    # 节点中存在 key:value
                 values:
-                - one
+                - one           # 防止同一个节点上运行多个 Pod
             topologyKey: "kubernetes.io/hostname"
       
       containers:
-      - name: carla-1t
+      - name: c-carla-api
         image: dxlcq/scene
-        command: ["python", "generator.py", "10.0.0.30", "32000", "scene2.json"]
+        command: ["python", "generator.py", "127.0.0.1", "2000", "scene1.json", "/mnt/nfs/job-1"] # 修改启动命令
         volumeMounts:
-          - name: nfs
+          - name: v-nfs
             mountPath: /mnt/nfs
+        env:
+          - name: TZ
+            value: Asia/Shanghai
 
       restartPolicy: Never
 
       volumes:
-        - name: nfs
+        - name: v-nfs
           persistentVolumeClaim:
             claimName: pvc-nfs
