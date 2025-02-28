@@ -10,4 +10,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: ymca-scheduler-sa
-  namespace: carla-base
+  namespace: carla

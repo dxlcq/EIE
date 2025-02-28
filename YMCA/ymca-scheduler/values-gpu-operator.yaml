@@ -1,4 +1,4 @@
 dcgmExporter:
   service:
     type: NodePort
-    nodePort: 39400
+    nodePort: 30049
