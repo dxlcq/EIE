@@ -1,18 +1,21 @@
 package gpuscheduling_test
 
 import (
-	"context"
-	"log"
-	"os"
-	"testing"
+    "context"
+    "log"
+    "os"
+    "testing"
 
-	"dxlcq.cn/ymca-scheduler/pkg/gpuscheduling"
+    "dxlcq.cn/ymca-scheduler/pkg/gpuscheduling"
 
-	"github.com/spf13/pflag"
+    "github.com/spf13/pflag"
+    corev1 "k8s.io/api/core/v1"
+    metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
     //"k8s.io/kubernetes/pkg/scheduler/framework"
     //"k8s.io/kubernetes/pkg/scheduler/framework/runtime"
     "k8s.io/kubernetes/cmd/kube-scheduler/app/options"
     "k8s.io/kubernetes/pkg/scheduler/apis/config"
+    "k8s.io/kubernetes/pkg/scheduler/framework"
 )
 
 func TestSchedulerSetup(t *testing.T) {
@@ -87,16 +90,46 @@ users:
 
             fs.Set("secure-port", "10086")                      // 手动设置参数，在部署的时候需要删除
             
-            // 我也不知道在干嘛
+            // ！！！
             ctx := context.Background()                         // 创建上下文
 
             plugin, err := gpuscheduling.New(ctx, nil, nil)     // 创建插件
             if err != nil {
                 t.Fatal(err)
-            }            
+            }
             log.Println(plugin.Name())
+            
+            FilterPlugin, ok := plugin.(framework.FilterPlugin) // 断言
+            if !ok {
+                t.Fatal("plugin is not a FilterPlugin")
+            }
+            node := &corev1.Node{
+                ObjectMeta: metav1.ObjectMeta{
+                    Name:   "k8s1",
+                    Labels: map[string]string{"gpu": "true"}, // 测试代码的 gpu 标签设为 true
+                },
+            }
+            
+            nodeInfo := framework.NewNodeInfo()
+            nodeInfo.SetNode(node)
+            
+            FilterPlugin.Filter(ctx, nil, nil, nodeInfo) // 调用 Filter 方法
 
-            log.Println("🥵 tnnd 至少说是跑上了")
+            ScorePlugin, ok := plugin.(framework.ScorePlugin)
+            if !ok {
+                t.Fatal("plugin is not a ScorePlugin")
+            }
+
+            scoreValue, status := ScorePlugin.Score(ctx, nil, nil, nodeInfo.Node().Name)
+            if status.Code() != framework.Success {
+                t.Errorf("Expected status Success, got: %v", status.Code())
+            }
+
+            log.Println("🫣 分数", scoreValue)
+
+
+            log.Println("")
+            log.Println("🥵 跑完啦！")
         })
     }
 }
