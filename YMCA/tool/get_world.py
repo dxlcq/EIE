@@ -15,7 +15,7 @@ def main():
         finally:
             return world
     
-    #world = change_world("Town03")
+    #world = change_world("Town10HD")
     
     print(f"当前版本: {client.get_client_version()}")
     print(f"同步模式: {world.get_settings().synchronous_mode}")
