@@ -1,0 +1,357 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: deployment-carla-0
+  namespace: carla
+
+spec:
+  replicas: 1     # 副本数量
+
+  selector:       # 选择器
+    matchLabels:
+      app: po-carla-0
+
+  template:       # 模板，起 pod
+    metadata:
+      labels:     # 设置标签
+        app: po-carla-0
+    
+    spec:
+      #schedulerName: ymca-scheduler   # 使用自定义调度器
+      nodeSelector:                    # 选择节点
+        kubernetes.io/hostname: k8s1
+      
+      containers:
+        - name: c-carla
+          image: carlasim/carla:0.9.15
+          command: ["/bin/bash", "./CarlaUE4.sh", "-RenderOffScreen", "-carla-rpc-port=32000", "-quality-level=low"]
+          securityContext:          # 启用特权模式
+            privileged: true
+          ports:
+            - containerPort: 32000
+            - containerPort: 32001
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-carla-0
+  namespace: carla
+spec:
+  type: NodePort
+  selector:
+    app: po-carla-0
+  ports:
+    - name: carla-32000
+      port: 32000
+      targetPort: 32000
+      nodePort: 32000
+    - name: carla-32001
+      port: 32001
+      targetPort: 32001
+      nodePort: 32001
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: deployment-carla-2
+  namespace: carla
+
+spec:
+  replicas: 1     # 副本数量
+
+  selector:       # 选择器
+    matchLabels:
+      app: po-carla-2
+
+  template:       # 模板，起 pod
+    metadata:
+      labels:     # 设置标签
+        app: po-carla-2
+    
+    spec:
+      #schedulerName: ymca-scheduler   # 使用自定义调度器
+      nodeSelector:                    # 选择节点
+        kubernetes.io/hostname: k8s2
+      
+      containers:
+        - name: c-carla
+          image: carlasim/carla:0.9.15
+          command: ["/bin/bash", "./CarlaUE4.sh", "-RenderOffScreen", "-carla-rpc-port=32002", "-quality-level=low"]
+          securityContext:          # 启用特权模式
+            privileged: true
+          ports:
+            - containerPort: 32002
+            - containerPort: 32003
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-carla-2
+  namespace: carla
+spec:
+  type: NodePort
+  selector:
+    app: po-carla-2
+  ports:
+    - name: carla-32002
+      port: 32002
+      targetPort: 32002
+      nodePort: 32002
+    - name: carla-32003
+      port: 32003
+      targetPort: 32003
+      nodePort: 32003
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: deployment-carla-4
+  namespace: carla
+
+spec:
+  replicas: 1     # 副本数量
+
+  selector:       # 选择器
+    matchLabels:
+      app: po-carla-4
+
+  template:       # 模板，起 pod
+    metadata:
+      labels:     # 设置标签
+        app: po-carla-4
+    
+    spec:
+      #schedulerName: ymca-scheduler   # 使用自定义调度器
+      nodeSelector:                    # 选择节点
+        kubernetes.io/hostname: k8s2
+
+      containers:
+        - name: c-carla
+          image: carlasim/carla:0.9.15
+          command: ["/bin/bash", "./CarlaUE4.sh", "-RenderOffScreen", "-carla-rpc-port=32004", "-quality-level=low"]
+          securityContext:          # 启用特权模式
+            privileged: true
+          ports:
+            - containerPort: 32004
+            - containerPort: 32005
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-carla-4
+  namespace: carla
+spec:
+  type: NodePort
+  selector:
+    app: po-carla-4
+  ports:
+    - name: carla-32004
+      port: 32004
+      targetPort: 32004
+      nodePort: 32004
+    - name: carla-32005
+      port: 32005
+      targetPort: 32005
+      nodePort: 32005
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: deployment-carla-6
+  namespace: carla
+
+spec:
+  replicas: 1     # 副本数量
+
+  selector:       # 选择器
+    matchLabels:
+      app: po-carla-6
+
+  template:       # 模板，起 pod
+    metadata:
+      labels:     # 设置标签
+        app: po-carla-6
+    
+    spec:
+      #schedulerName: ymca-scheduler   # 使用自定义调度器
+      nodeSelector:                    # 选择节点
+        kubernetes.io/hostname: k8s3
+      
+      containers:
+        - name: c-carla
+          image: carlasim/carla:0.9.15
+          command: ["/bin/bash", "./CarlaUE4.sh", "-RenderOffScreen", "-carla-rpc-port=32006", "-quality-level=low"]
+          securityContext:          # 启用特权模式
+            privileged: true
+          ports:
+            - containerPort: 32006
+            - containerPort: 32007
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-carla-6
+  namespace: carla
+spec:
+  type: NodePort
+  selector:
+    app: po-carla-6
+  ports:
+    - name: carla-32006
+      port: 32006
+      targetPort: 32006
+      nodePort: 32006
+    - name: carla-32007
+      port: 32007
+      targetPort: 32007
+      nodePort: 32007
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: deployment-carla-8
+  namespace: carla
+
+spec:
+  replicas: 1     # 副本数量
+
+  selector:       # 选择器
+    matchLabels:
+      app: po-carla-8
+
+  template:       # 模板，起 pod
+    metadata:
+      labels:     # 设置标签
+        app: po-carla-8
+    
+    spec:
+      #schedulerName: ymca-scheduler   # 使用自定义调度器
+      nodeSelector:                    # 选择节点
+        kubernetes.io/hostname: k8s3
+      
+      containers:
+        - name: c-carla
+          image: carlasim/carla:0.9.15
+          command: ["/bin/bash", "./CarlaUE4.sh", "-RenderOffScreen", "-carla-rpc-port=32008", "-quality-level=low"]
+          securityContext:          # 启用特权模式
+            privileged: true
+          ports:
+            - containerPort: 32008
+            - containerPort: 32009
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-carla-8
+  namespace: carla
+spec:
+  type: NodePort
+  selector:
+    app: po-carla-8
+  ports:
+    - name: carla-32008
+      port: 32008
+      targetPort: 32008
+      nodePort: 32008
+    - name: carla-32009
+      port: 32009
+      targetPort: 32009
+      nodePort: 32009

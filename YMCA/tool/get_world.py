@@ -2,7 +2,7 @@ import carla
 import time
 
 def main():
-    client = carla.Client('180.85.207.27', 2000)
+    client = carla.Client('180.85.207.45', 32000)
     client.set_timeout(2)                       # 超时设置
     world = client.get_world()
 
